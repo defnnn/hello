@@ -1,7 +1,7 @@
 service {
   name = "hello"
   id = "hello"
-  address = "172.31.188.201"
+  address = "YYYY"
   port = 80
   
   connect { 
@@ -10,7 +10,7 @@ service {
       
       check {
         name = "Connect Envoy Sidecar"
-        tcp = "172.31.188.201:20000"
+        tcp = "YYYY:20000"
         interval ="10s"
       }
 

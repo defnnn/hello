@@ -20,6 +20,11 @@ service {
           local_bind_address = "127.0.0.1"
           local_bind_port = 9091
         }
+        upstreams {
+          destination_name = "vault"
+          local_bind_address = "127.0.0.1"
+          local_bind_port = 9092
+        }
       }
     }  
   }

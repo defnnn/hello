@@ -3,6 +3,12 @@ service {
   id = "goodbye"
   address = "YYYY"
   port = 80
+
+  tags = [
+    "traefik.enable=true",
+    "traefik.http.routers.goodbye.rule=HostRegexp(`goodbye.{domain:.+}`)",
+    "traefik.http.services.goodbye.loadbalancer.server.port=80"
+  ]
   
   connect { 
     sidecar_service {
@@ -19,11 +25,6 @@ service {
           destination_name = "hello"
           local_bind_address = "127.0.0.1"
           local_bind_port = 9091
-        }
-        upstreams {
-          destination_name = "vault"
-          local_bind_address = "127.0.0.1"
-          local_bind_port = 9092
         }
       }
     }  

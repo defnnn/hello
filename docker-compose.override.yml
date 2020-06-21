@@ -16,9 +16,6 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.hello.rule=HostRegexp(`hello.{domain:.+}`)"
-      - "traefik.http.routers.hello.tls=true"
-      - "traefik.http.routers.hello.tls.certresolver=le"
-      - "traefik.http.routers.hello.tls.domains[0].main=hello.kitt.run"
 
 networks:
   default:

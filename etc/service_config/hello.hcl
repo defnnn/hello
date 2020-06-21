@@ -4,6 +4,12 @@ service {
   address = "YYYY"
   port = 80
 
+  checks {
+    name = "Hello port TCP connect"
+    tcp = "YYYY:80"
+    interval = "10s"
+  }
+
   connect { 
     sidecar_service {
       port = 20000

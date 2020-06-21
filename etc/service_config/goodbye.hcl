@@ -6,8 +6,7 @@ service {
 
   tags = [
     "traefik.enable=true",
-    "traefik.http.routers.goodbye.rule=HostRegexp(`goodbye.{domain:.+}`)",
-    "traefik.http.services.goodbye.loadbalancer.server.port=80"
+    "traefik.http.routers.goodbye.rule=HostRegexp(`goodbye.{domain:.+}`)"
   ]
   
   connect { 

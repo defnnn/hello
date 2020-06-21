@@ -4,6 +4,7 @@ services:
   domains:
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.domains.entrypoints=https"
       - "traefik.http.routers.domains.rule=HostRegexp(`domains`)"
       - "traefik.http.routers.domains.tls=true"
       - "traefik.http.routers.domains.tls.certresolver=le"
@@ -15,6 +16,7 @@ services:
   hello:
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.hello.entrypoints=https"
       - "traefik.http.routers.hello.rule=HostRegexp(`hello.{domain:.+}`)"
 
 networks:

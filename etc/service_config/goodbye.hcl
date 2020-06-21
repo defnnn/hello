@@ -6,6 +6,7 @@ service {
 
   tags = [
     "traefik.enable=true",
+    "traefik.http.routers.goodbye.entrypoints=https",
     "traefik.http.routers.goodbye.rule=HostRegexp(`goodbye.{domain:.+}`)"
   ]
 

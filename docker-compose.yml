@@ -10,6 +10,7 @@ services:
     environment:
       CONSUL_HTTP_ADDR: 169.254.32.1:8500
       CONSUL_GRPC_ADDR: 169.254.32.1:8502
+      CONSUL_HTTP_TOKEN: ${CONSUL_HTTP_TOKEN}
       SERVICE_CONFIG: /config/hello.hcl
       CENTRAL_CONFIG: /central_config/hello.hcl
     volumes:
@@ -27,6 +28,7 @@ services:
     environment:
       CONSUL_HTTP_ADDR: 169.254.32.1:8500
       CONSUL_GRPC_ADDR: 169.254.32.1:8502
+      CONSUL_HTTP_TOKEN: ${CONSUL_HTTP_TOKEN}
       SERVICE_CONFIG: /config/goodbye.hcl
       SERVICE_PROXY_CONFIG: /config/goodbye-proxy.hcl
       CENTRAL_CONFIG: /central_config/goodbye.hcl

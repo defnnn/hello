@@ -6,7 +6,7 @@ services:
   hello:
     image: nginx
   hello-proxy:
-    image: letfn/consul-envoy:v1.8.0-rc1-v0.14.1
+    image: letfn/consul-envoy:v1.8.0-v0.14.1
     environment:
       CONSUL_HTTP_ADDR: 169.254.32.1:8500
       CONSUL_GRPC_ADDR: 169.254.32.1:8502
@@ -23,11 +23,12 @@ services:
       default:
         ipv4_address: 172.31.188.202
   goodbye-proxy:
-    image: letfn/consul-envoy:v1.8.0-rc1-v0.14.1
+    image: letfn/consul-envoy:v1.8.0-v0.14.1
     environment:
       CONSUL_HTTP_ADDR: 169.254.32.1:8500
       CONSUL_GRPC_ADDR: 169.254.32.1:8502
       SERVICE_CONFIG: /config/goodbye.hcl
+      SERVICE_PROXY_CONFIG: /config/goodbye-proxy.hcl
       CENTRAL_CONFIG: /central_config/goodbye.hcl
     volumes:
       - "./etc/service_config:/config"

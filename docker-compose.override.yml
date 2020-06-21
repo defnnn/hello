@@ -4,14 +4,14 @@ services:
   domains:
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.hello.rule=HostRegexp(`domains`)"
-      - "traefik.http.routers.hello.tls=true"
-      - "traefik.http.routers.hello.tls.certresolver=le"
-      - "traefik.http.routers.hello.tls.domains[0].main=kitt.run"
-      - "traefik.http.routers.hello.tls.domains[0].sans=*.kitt.run"
-      - "traefik.http.routers.hello.tls.domains[1].sans=*.whoa.bot"
-      - "traefik.http.routers.hello.tls.domains[2].sans=*.defn.sh"
-      - "traefik.http.routers.hello.tls.domains[3].sans=*.eldri.ch"
+      - "traefik.http.routers.domains.rule=HostRegexp(`domains`)"
+      - "traefik.http.routers.domains.tls=true"
+      - "traefik.http.routers.domains.tls.certresolver=le"
+      - "traefik.http.routers.domains.tls.domains[0].main=kitt.run"
+      - "traefik.http.routers.domains.tls.domains[0].sans=*.kitt.run"
+      - "traefik.http.routers.domains.tls.domains[1].sans=*.whoa.bot"
+      - "traefik.http.routers.domains.tls.domains[2].sans=*.defn.sh"
+      - "traefik.http.routers.domains.tls.domains[3].sans=*.eldri.ch"
   hello:
     labels:
       - "traefik.enable=true"

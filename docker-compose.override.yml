@@ -11,8 +11,10 @@ services:
       - "traefik.http.routers.domains.tls.domains[0].main=kitt.run"
       - "traefik.http.routers.domains.tls.domains[0].sans=*.kitt.run"
       - "traefik.http.routers.domains.tls.domains[1].sans=*.whoa.bot"
-      - "traefik.http.routers.domains.tls.domains[2].sans=*.defn.sh"
-      - "traefik.http.routers.domains.tls.domains[3].sans=*.eldri.ch"
+      - "traefik.http.routers.domains.tls.domains[2].sans=*.eldri.ch"
+      - "traefik.http.routers.domains.tls.domains[3].sans=*.defn.sh"
+      - "traefik.http.routers.domains.tls.domains[4].sans=*.defn.in"
+      - "traefik.http.routers.domains.tls.domains[5].sans=*.defn.jp"
   hello:
     labels:
       - "traefik.enable=true"

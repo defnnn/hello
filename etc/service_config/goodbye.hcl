@@ -6,7 +6,10 @@ service {
 
   tags = [
     "traefik.enable=true",
-    "traefik.http.routers.goodbye.rule=HostRegexp(`goodbye.{domain:.+}`)"
+    "traefik.http.routers.goodbye.rule=HostRegexp(`goodbye.{domain:.+}`)",
+    "traefik.http.routers.goodbye.tls=true",
+    "traefik.http.routers.goodbye.tls.certresolver=le",
+    "traefik.http.routers.goodbye.tls.domains[0].main=goodbye.kitt.run"
   ]
   
   connect { 

@@ -1,25 +1,8 @@
 version: '3.7'
 
 services:
-  domains:
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.domains.entrypoints=https"
-      - "traefik.http.routers.domains.rule=HostRegexp(`domains`)"
-      - "traefik.http.routers.domains.tls=true"
-      - "traefik.http.routers.domains.tls.certresolver=le"
-      - "traefik.http.routers.domains.tls.domains[0].main=kitt.run"
-      - "traefik.http.routers.domains.tls.domains[0].sans=*.kitt.run"
-      - "traefik.http.routers.domains.tls.domains[1].sans=*.whoa.bot"
-      - "traefik.http.routers.domains.tls.domains[2].sans=*.defn.sh"
-      - "traefik.http.routers.domains.tls.domains[3].sans=*.eldri.ch"
   hello:
+    image: nginx
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.hello.entrypoints=https"
-      - "traefik.http.routers.hello.rule=HostRegexp(`hello.{domain:.+}`)"
-
-networks:
-  default:
-    external:
-      name: kitt
+      - "hera.hostname=hello.defn.sh"
+      - "hera.port=80"

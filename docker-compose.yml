@@ -1,21 +1,6 @@
 version: '3.7'
 
 services:
-  domains:
-    image: nginx
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.domains.entrypoints=https"
-      - "traefik.http.routers.domains.rule=HostRegexp(`domains`)"
-      - "traefik.http.routers.domains.tls=true"
-      - "traefik.http.routers.domains.tls.certresolver=le"
-      - "traefik.http.routers.domains.tls.domains[0].main=kitt.run"
-      - "traefik.http.routers.domains.tls.domains[0].sans=*.kitt.run"
-      - "traefik.http.routers.domains.tls.domains[1].sans=*.whoa.bot"
-      - "traefik.http.routers.domains.tls.domains[2].sans=*.eldri.ch"
-      - "traefik.http.routers.domains.tls.domains[3].sans=*.defn.sh"
-      - "traefik.http.routers.domains.tls.domains[4].sans=*.defn.in"
-      - "traefik.http.routers.domains.tls.domains[5].sans=*.defn.jp"
   hello:
     image: nginx
     volumes:

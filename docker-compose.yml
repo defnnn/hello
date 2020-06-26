@@ -10,7 +10,7 @@ services:
       - "traefik.http.routers.hello.entrypoints=https"
       - "traefik.http.routers.hello.rule=HostRegexp(`hello.{domain:.+}`)"
   hello-proxy:
-    image: letfn/consul-envoy:v1.8.0-v0.14.1
+    image: letfn/consul-envoy:v1.8.0-v1.14.2
     environment:
       CONSUL_HTTP_ADDR: 169.254.32.1:8500
       CONSUL_GRPC_ADDR: 169.254.32.1:8502
@@ -30,14 +30,14 @@ services:
       default:
         ipv4_address: 172.31.188.202
   goodbye-proxy:
-    image: letfn/consul-envoy:v1.8.0-v0.14.1
+    image: letfn/consul-envoy:v1.8.0-v1.14.2
     environment:
       CONSUL_HTTP_ADDR: 169.254.32.1:8500
       CONSUL_GRPC_ADDR: 169.254.32.1:8502
       CONSUL_HTTP_TOKEN: ${CONSUL_HTTP_TOKEN}
       SERVICE_CONFIG: /config/goodbye.hcl
       SERVICE_PROXY_CONFIG: /config/goodbye-proxy.hcl
-      CENTRAL_CONFIG: /central_config/goodbye.hcl
+      CENTRAL_CONFIG: /central_config/goodbye.hcl;/central_config/goodbye-resolver.hcl
     volumes:
       - "./etc/service_config:/config"
       - "./etc/central_config:/central_config"

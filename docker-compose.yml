@@ -3,6 +3,7 @@ version: '3.7'
 services:
   hello:
     image: nginx
+    restart: always
     volumes:
       - "./html/hello:/usr/share/nginx/html"
     labels:
@@ -11,6 +12,7 @@ services:
       - "traefik.http.routers.hello.rule=HostRegexp(`hello.{domain:.+}`)"
   hello-proxy:
     image: letfn/consul-envoy:v1.8.0-v1.14.2
+    restart: always
     environment:
       CONSUL_HTTP_ADDR: 169.254.32.1:8500
       CONSUL_GRPC_ADDR: 169.254.32.1:8502
@@ -24,6 +26,7 @@ services:
     network_mode: "service:hello"
   goodbye:
     image: nginx
+    restart: always
     volumes:
       - "./html/goodbye:/usr/share/nginx/html"
     networks:
@@ -31,6 +34,7 @@ services:
         ipv4_address: 172.31.188.202
   goodbye-proxy:
     image: letfn/consul-envoy:v1.8.0-v1.14.2
+    restart: always
     environment:
       CONSUL_HTTP_ADDR: 169.254.32.1:8500
       CONSUL_GRPC_ADDR: 169.254.32.1:8502

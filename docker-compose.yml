@@ -6,6 +6,7 @@ services:
     restart: always
     volumes:
       - "./html/hello:/usr/share/nginx/html"
+      - "./etc/nginx/conf.d:/etc/nginx/conf.d"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.hello.entrypoints=https"

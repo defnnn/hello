@@ -1,6 +1,15 @@
 version: '3.7'
 
 services:
+  zt:
+    image: nginx
+    restart: always
+    volumes:
+      - "./html/zt:/usr/share/nginx/html"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.zt.entrypoints=https"
+      - "traefik.http.routers.zt.rule=HostRegexp(`zt.{domain:.+}`)"
   hello:
     image: nginx
     restart: always

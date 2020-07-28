@@ -9,7 +9,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.zt.entrypoints=https"
-      - "traefik.http.routers.zt.rule=HostRegexp(`zt.{domain:.+}`)"
+      - "traefik.http.routers.zt.rule=Host(`${KITT_DOMAIN}`)"
   hello:
     image: nginx
     restart: always

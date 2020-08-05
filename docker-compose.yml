@@ -1,15 +1,15 @@
 version: '3.7'
 
 services:
-  zt:
+  apex:
     image: nginx
     restart: always
     volumes:
-      - "./html/zt:/usr/share/nginx/html"
+      - "./html/apex:/usr/share/nginx/html"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.zt.entrypoints=https"
-      - "traefik.http.routers.zt.rule=Host(`${KITT_DOMAIN}`)"
+      - "traefik.http.routers.apex.entrypoints=https"
+      - "traefik.http.routers.apex.rule=Host(`${KITT_DOMAIN}`)"
   hello:
     image: nginx
     restart: always
@@ -39,9 +39,6 @@ services:
     restart: always
     volumes:
       - "./html/goodbye:/usr/share/nginx/html"
-    networks:
-      default:
-        ipv4_address: 172.31.188.202
   goodbye-proxy:
     image: letfn/consul-envoy:v1.8.0-v1.14.2
     restart: always

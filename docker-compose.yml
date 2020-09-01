@@ -5,7 +5,7 @@ services:
     image: nginx
     restart: always
     volumes:
-      - "./html/apex:/usr/share/nginx/html"
+      - apex:/usr/share/nginx/html
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.apex.entrypoints=https"
@@ -14,8 +14,8 @@ services:
     image: nginx
     restart: always
     volumes:
-      - "./html/hello:/usr/share/nginx/html"
-      - "./etc/nginx/conf.d:/etc/nginx/conf.d"
+      - hello:/usr/share/nginx/html
+      - hello_nginx:/etc/nginx/conf.d
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.hello.entrypoints=https"
@@ -30,15 +30,15 @@ services:
       SERVICE_CONFIG: /config/hello.hcl
       CENTRAL_CONFIG: /central_config/hello.hcl
     volumes:
-      - "./etc/service_config:/config"
-      - "./etc/central_config:/central_config"
+      - hello_proxy_config:/config
+      - hello_proxy_central:/central_config
     command: ["consul", "connect", "envoy","-sidecar-for", "hello"]
     network_mode: "service:hello"
   goodbye:
     image: nginx
     restart: always
     volumes:
-      - "./html/goodbye:/usr/share/nginx/html"
+      - goodbye:/usr/share/nginx/html
   goodbye-proxy:
     image: letfn/consul-envoy:v1.8.0-v1.14.2
     restart: always
@@ -50,10 +50,20 @@ services:
       SERVICE_PROXY_CONFIG: /config/goodbye-proxy.hcl
       CENTRAL_CONFIG: /central_config/goodbye.hcl;/central_config/goodbye-resolver.hcl
     volumes:
-      - "./etc/service_config:/config"
-      - "./etc/central_config:/central_config"
+      - goodbye_proxy_config:/config
+      - goodbye_proxy_central:/central_config
     command: ["consul", "connect", "envoy","-sidecar-for", "goodbye"]
     network_mode: "service:goodbye"
+
+volumes:
+  apex:
+  hello:
+  hello_nginx:
+  hello_proxy_config:
+  hello_proxy_central:
+  goodbye:
+  goodbye_proxy_config:
+  goodbye_proxy_central:
 
 networks:
   default:

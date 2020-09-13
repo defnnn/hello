@@ -10,7 +10,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api.entrypoints=http"
-      - "traefik.http.routers.api.rule=PathPrefix(`/bastion-1/jojomomojo/`)"
+      - "traefik.http.routers.api.rule=HostRegexp(`api.{domain:.+}`)"
   hello:
     image: nginx
     restart: always

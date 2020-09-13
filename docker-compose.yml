@@ -1,15 +1,16 @@
 version: '3.7'
 
 services:
-  apex:
+  api:
     image: nginx
     restart: always
     volumes:
-      - apex:/usr/share/nginx/html
+      - api:/usr/share/nginx/html
+      - api_nginx:/etc/nginx/conf.d
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.apex.entrypoints=https"
-      - "traefik.http.routers.apex.rule=Host(`${KITT_DOMAIN}`)"
+      - "traefik.http.routers.api.entrypoints=http"
+      - "traefik.http.routers.api.rule=PathPrefix(`/bastion-1/jojomomojo/`)"
   hello:
     image: nginx
     restart: always
@@ -27,7 +28,8 @@ services:
       - goodbye:/usr/share/nginx/html
 
 volumes:
-  apex:
+  api:
+  api_nginx:
   hello:
   hello_nginx:
   goodbye:

@@ -1,8 +1,0 @@
-version: '3.7'
-
-services:
-  hello:
-    image: nginx
-    labels:
-      - "hera.hostname=hello.defn.sh"
-      - "hera.port=80"

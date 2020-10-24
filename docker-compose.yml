@@ -1,40 +1,15 @@
 version: '3.7'
 
 services:
-  api:
-    image: nginx
-    restart: always
-    volumes:
-      - api:/usr/share/nginx/html
-      - api_nginx:/etc/nginx/conf.d
+  whoami:
+    image: containous/whoami
     labels:
+      - "zone=kitt"
       - "traefik.enable=true"
-      - "traefik.http.routers.api.entrypoints=http"
-      - "traefik.http.routers.api.rule=HostRegexp(`api.{domain:.+}`)"
-  hello:
-    image: nginx
-    restart: always
-    volumes:
-      - hello:/usr/share/nginx/html
-      - hello_nginx:/etc/nginx/conf.d
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.hello.entrypoints=https"
-      - "traefik.http.routers.hello.rule=HostRegexp(`hello.{domain:.+}`)"
-  goodbye:
-    image: nginx
-    restart: always
-    volumes:
-      - goodbye:/usr/share/nginx/html
-
-volumes:
-  api:
-  api_nginx:
-  hello:
-  hello_nginx:
-  goodbye:
+      - "traefik.http.routers.api.entrypoints=http,https"
+      - "traefik.http.routers.api.rule=HostRegexp(`whoami.{domain:.+}`)"
 
 networks:
   default:
     external:
-      name: kitt
+      name: kitt_default

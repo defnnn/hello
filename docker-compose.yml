@@ -7,6 +7,7 @@ services:
       - 80
     labels:
       - "SERVICE_NAME=whoami"
+      - "app=hello"
       - "zone=kitt"
       - "traefik.enable=true"
       - "traefik.http.routers.whoami.tls=true"

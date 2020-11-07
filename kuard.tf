@@ -12,7 +12,7 @@ job "kuard" {
   }
 
   group "kuard" {
-    count = 1
+    count = 3
 
     restart {
       attempts = 10

@@ -12,7 +12,7 @@ job "whoami" {
   }
 
   group "whoami" {
-    count = 1
+    count = 3
 
     restart {
       attempts = 10

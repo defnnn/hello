@@ -15,3 +15,12 @@ down:
 recreate:
 	$(MAKE) clean
 	$(MAKE) up
+
+fmt:
+	for a in *.tf; do terraform fmt $$a; done
+	nomad job validate kuard.tf
+	nomad job validate whoami.tf
+
+run:
+	nomad job run kuard.tf
+	nomad job run whoami.tf

@@ -1,6 +1,7 @@
 job "defn" {
   region      = "global"
   datacenters = ["defn"]
+  namespace   = "defn"
   type        = "service"
 
   update {

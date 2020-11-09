@@ -1,6 +1,6 @@
-job "defn" {
+job "workshop" {
   region      = "global"
-  datacenters = ["defn"]
+  datacenters = ["workshop"]
   type        = "service"
 
   update {
@@ -44,13 +44,13 @@ job "defn" {
       }
 
       service {
-        name = "defn-whoami"
+        name = "workshop-whoami"
         port = "whoami"
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.defn-whoami.entrypoints=https",
-          "traefik.http.routers.defn-whoami.rule=HostRegexp(`defn-whoami.{domain:.+}`)"
+          "traefik.http.routers.workshop-whoami.entrypoints=https",
+          "traefik.http.routers.workshop-whoami.rule=HostRegexp(`workshop-whoami.{domain:.+}`)"
         ]
       }
     }

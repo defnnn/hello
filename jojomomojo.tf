@@ -1,6 +1,6 @@
-job "defn" {
+job "jojomomojo" {
   region      = "global"
-  datacenters = ["defn"]
+  datacenters = ["jojomomojo"]
   namespace   = "defn"
   type        = "service"
 

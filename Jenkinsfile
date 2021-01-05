@@ -1,8 +1,5 @@
 #!/usr/bin/env groovy
 
-//def VAULT_ADDR = "http://127.0.0.1:8200"
-//env.VAULT_ADDR = VAULT_ADDR
-
 node() {
   withCredentials([[
       $class: 'VaultTokenCredentialBinding',

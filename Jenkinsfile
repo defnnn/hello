@@ -10,5 +10,9 @@ node() {
     stage ('Vault Token Lookup') {
       sh 'vault token lookup'
     }
+
+    stage ('Read Secrets') {
+      sh 'vault kv get kv/defn/hello'
+    }
   }          
 }

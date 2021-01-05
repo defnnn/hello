@@ -8,10 +8,7 @@ node() {
     ]]) {
 
     stage ('Vault Token Lookup') {
-      sh(
-        returnStdout: true,
-        script: "vault token lookup"
-      )
+      sh 'vault token lookup'
     }
   }          
 }

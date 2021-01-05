@@ -3,7 +3,7 @@
 node() {
   withCredentials([[
       $class: 'VaultTokenCredentialBinding',
-      credentialsId: 'VaultToken'
+      credentialsId: 'VaultToken',
       vaultAddr: 'http://127.0.0.1:8200'
     ]]) {
 

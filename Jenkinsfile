@@ -33,7 +33,7 @@ node() {
       def VAULT_PIPELINE_TOKEN = ''
       env.VAULT_PIPELINE_TOKEN = sh(
         returnStdout: true,
-        script: "echo set +x > token; echo -n export VAULT_TOKEN= >> token; vault write -field=token auth/approle/login role_id=${ROLE_ID} secret_id=${UNWRAPPED_SID} | tee -a token; echo set -x >> token"
+        script: "echo set +x > token; echo -n export VAULT_TOKEN= >> token; vault write -field=token auth/approle/login role_id=${ROLE_ID} secret_id=${UNWRAPPED_SID} | tee -a token; (echo; echo set -x) >> token"
       )
     }
 

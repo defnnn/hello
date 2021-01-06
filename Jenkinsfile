@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 def ROLE = 'pipeline'
-def ROLE_ID = '11f503c6-9c4f-d223-7845-64b177864ddf'
+def ROLE_ID = 'b45fcd66-6e60-3c2f-57e9-c0c5ecd59df2'
 
 node() {
   withCredentials([[

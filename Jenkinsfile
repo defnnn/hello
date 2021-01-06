@@ -30,15 +30,15 @@ node() {
     }
 
     stage('Pipeline approle login token') {
-      def VAULT_LOGIN_TOKEN = ''
-      env.VAULT_LOGIN_TOKEN = sh(
+      def VAULT_TOKEN = ''
+      env.VAULT_TOKEN = sh(
         returnStdout: true,
         script: "vault write -field=token auth/approle/login role_id=${ROLE_ID} secret_id=${UNWRAPPED_SID}"
       )
     }
 
     stage ('Pipeline token lookup') {
-      sh "env VAULT_TOKEN=${VAULT_LOGIN_TOKEN} vault token lookup ${VAULT_LOGIN_TOKEN}"
+      sh "vault token lookup"
     }
 
   }

@@ -46,7 +46,8 @@ node() {
     }
 
     stage ('Pipeline token lookup') {
-      sh "vault token lookup ${VAULT_PIPELINE_TOKEN}"
+      env.VAULT_TOKEN = env.VAULT_PIPELINE_TOKEN
+      sh "vault token lookup"
     }
 
   }

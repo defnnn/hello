@@ -7,7 +7,11 @@ node() {
       vaultAddr: env.VAULT_ADDR ]]) {
 
     stage ('Read Secrets') {
-      sh 'env | grep -i name'
+      sh 'vault token lookup'
     }
+  }
+
+  stage ('Read Secrets without credentials') {
+    sh 'vault token lookup'
   }
 }

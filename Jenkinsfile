@@ -9,10 +9,6 @@ node() {
       credentialsId: 'VaultToken',
       vaultAddr: env.VAULT_ADDR ]]) {
 
-    stage ('Read Secrets') {
-      sh 'vault token lookup | grep ^meta'
-    }
-
     stage ('Pipeline wrapped secret_id') {
         def WRAPPED_SID = ''
         env.WRAPPED_SID = sh(
@@ -35,10 +31,6 @@ node() {
         returnStdout: true,
         script: "echo set +x > token; echo -n export VAULT_TOKEN= >> token; vault write -field=token auth/approle/login role_id=${ROLE_ID} secret_id=${UNWRAPPED_SID} | tee -a token; (echo; echo set -x) >> token"
       )
-    }
-
-    stage ('Pipeline token lookup') {
-      sh '. ./token && (vault token lookup | grep ^meta)'
     }
 
     stage ('Pipeline revoke token') {

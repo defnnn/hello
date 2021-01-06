@@ -3,6 +3,15 @@ SHELL := /bin/bash
 menu:
 	@perl -ne 'printf("%10s: %s\n","$$1","$$2") if m{^([\w+-]+):[^#]+#\s(.+)$$}' Makefile
 
+build: # Build defn/hello
+	docker build -t defn/hello .
+
+push: # Push defn/hello
+	docker push defn/hello
+
+bash: # Run bash shell with defn/hello
+	docker run --rm -ti --entrypoint bash defn/hello
+
 clean:
 	docker-compose down --remove-orphans
 
@@ -16,11 +25,5 @@ recreate:
 	$(MAKE) clean
 	$(MAKE) up
 
-fmt:
-	for a in *.tf; do terraform fmt $$a; done
-	nomad job validate kuard.tf
-	nomad job validate whoami.tf
-
-run:
-	nomad job run kuard.tf
-	nomad job run whoami.tf
+logs:
+	docker-compose logs -f

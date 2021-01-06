@@ -1,6 +1,7 @@
 #!/usr/bin/env groovy
 
 node() {
+  // sets VAULT_TOKEN
   withCredentials([[
       $class: 'VaultTokenCredentialBinding',
       credentialsId: 'VaultToken',
@@ -9,9 +10,5 @@ node() {
     stage ('Read Secrets') {
       sh 'vault token lookup'
     }
-  }
-
-  stage ('Read Secrets without credentials') {
-    sh 'vault token lookup'
   }
 }

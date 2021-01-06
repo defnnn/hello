@@ -38,7 +38,7 @@ node() {
     }
 
     stage ('Pipeline token lookup') {
-      sh 'vault token lookup | grep ^meta'
+      sh '. ./token && (vault token lookup | grep ^meta)'
     }
 
     stage ('Pipeline revoke token') {

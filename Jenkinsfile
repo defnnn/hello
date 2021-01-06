@@ -7,12 +7,7 @@ node() {
       vaultAddr: env.VAULT_ADDR ]]) {
 
     stage ('Read Secrets') {
-      sh 'vault kv get kv/defn/hello'
-      sh 'env | grep VAULT | sort'
-    }
-
-    stage ('Vault Token Lookup') {
-      sh 'vault token lookup'
+      sh 'env | grep -i name'
     }
   }
 }

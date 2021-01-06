@@ -10,7 +10,7 @@ node() {
       vaultAddr: env.VAULT_ADDR ]]) {
 
     stage ('Read Secrets') {
-      sh 'vault token lookup'
+      sh 'vault token lookup | grep ^meta'
     }
 
     stage ('Pipeline wrapped secret_id') {
@@ -38,11 +38,11 @@ node() {
     }
 
     stage ('Pipeline token lookup') {
-      sh "source ./token && vault token lookup"
+      sh 'vault token lookup | grep ^meta'
     }
 
     stage ('Pipeline revoke token') {
-      sh "source ./token && vault token revoke -self"
+      sh ". ./token && vault token revoke -self"
     }
   }
 }

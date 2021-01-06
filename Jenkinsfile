@@ -33,13 +33,16 @@ node() {
       def VAULT_PIPELINE_TOKEN = ''
       env.VAULT_PIPELINE_TOKEN = sh(
         returnStdout: true,
-        script: "vault write -field=token auth/approle/login role_id=${ROLE_ID} secret_id=${UNWRAPPED_SID}"
+        script: "echo -n export VAULT_TOKEN= > token; vault write -field=token auth/approle/login role_id=${ROLE_ID} secret_id=${UNWRAPPED_SID} | tee -a token"
       )
     }
 
     stage ('Pipeline token lookup') {
-      sh "env VAULT_TOKEN=${VAULT_PIPELINE_TOKEN} vault token lookup"
+      sh "source ./token && vault token lookup"
     }
 
+    stage ('Pipeline revoke token') {
+      sh "source ./token && vault token revoke -self"
+    }
   }
 }

@@ -4,6 +4,8 @@ def ROLE = 'pipeline'
 def ROLE_ID = 'b45fcd66-6e60-3c2f-57e9-c0c5ecd59df2'
 
 node() {
+  checkout scm
+
   withCredentials([[
     $class: 'VaultTokenCredentialBinding',
     credentialsId: 'VaultToken',
@@ -12,6 +14,7 @@ node() {
     stage ('asdf') {
       sh """
         pwd
+        find .
         cat .tool-versions
         /env.sh asdf install
       """

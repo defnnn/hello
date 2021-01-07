@@ -48,7 +48,11 @@ node() {
         Secret.fromString(PIPELINE_TOKEN)
       )
 
-      withVault([vaultSecrets: pipelineSecrets, vaultCredential: pipelineCredential]) {
+      def pipelineConfiguration = [
+        vaultCredential: pipelineCredential
+      ]
+
+      withVault([vaultSecrets: pipelineSecrets, configuration: pipelineConfiguration]) {
         sh "env | grep MEH"
       }
     }

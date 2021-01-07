@@ -22,7 +22,7 @@ node() {
     }
 
     stage('Docker image') {
-      sh "/env.sh docker run --rm -ti defn/hello:test"
+      sh "/env.sh docker run --rm defn/hello:test"
     }
   }
 }

@@ -11,9 +11,16 @@ node() {
     credentialsId: 'VaultToken',
     vaultAddr: env.VAULT_ADDR ]]) {
 
+    stage ('Env') {
+      def SCM_VERSION = ''
+      env.SCM_VERSION = sh(
+        returnStdout: true,
+        script: "git branch --show-current"
+      )
+    }
+
     stage ('Secrets') {
       sh """
-        env | grep GIT
         ./ci/build "${NM_ROLE}" "${ID_ROLE}"
       """
     }
@@ -23,7 +30,7 @@ node() {
     }
 
     stage('Docker image') {
-      sh "/env.sh docker run --rm defn/hello:${GIT_BRANCH}-next-amd64"
+      sh "/env.sh docker run --rm defn/hello:${SCM_VERSION}-next-amd64"
     }
   }
 }

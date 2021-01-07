@@ -19,7 +19,7 @@ dockers:
     goos: linux
     goarch: amd64
     image_templates:
-      - "defn/hello:{{ .Env.GIT_BRANCH }}-amd64"
+      - "defn/hello:{{ .Env.SCM_VERSION }}-amd64"
     dockerfile: Dockerfile
     use_buildx: true
     build_flag_templates:
@@ -30,20 +30,20 @@ dockers:
     goos: linux
     goarch: arm64
     image_templates:
-      - "defn/hello:{{ .Env.GIT_BRANCH }}-arm64"
+      - "defn/hello:{{ .Env.SCM_VERSION }}-arm64"
     dockerfile: Dockerfile
     use_buildx: true
     build_flag_templates:
       - --platform=linux/arm64/v8
 docker_manifests:
-  - name_template: "defn/hello:{{ .Env.GIT_BRANCH }}"
+  - name_template: "defn/hello:{{ .Env.SCM_VERSION }}"
     image_templates:
-      - "defn/hello:{{ .Env.GIT_BRANCH }}-amd64"
-      - "defn/hello:{{ .Env.GIT_BRANCH }}-arm64"
+      - "defn/hello:{{ .Env.SCM_VERSION }}-amd64"
+      - "defn/hello:{{ .Env.SCM_VERSION }}-arm64"
 checksum:
   name_template: 'checksums.txt'
 snapshot:
-  name_template: "{{ .Env.GIT_BRANCH}}-next"
+  name_template: "{{ .Env.SCM_VERSION}}-next"
 changelog:
   sort: asc
   filters:

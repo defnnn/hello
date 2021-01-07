@@ -15,7 +15,7 @@ node() {
       def SCM_VERSION = ''
       env.SCM_VERSION = sh(
         returnStdout: true,
-        script: "git branch --show-current"
+        script: "git rev-parse --abbrev-ref HEAD"
       )
     }
 

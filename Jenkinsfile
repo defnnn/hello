@@ -3,12 +3,12 @@
 def NM_ROLE = 'pipeline'
 def ID_ROLE = 'b45fcd66-6e60-3c2f-57e9-c0c5ecd59df2'
 
-def secrets = [
+def githubSecrets = [
   [ 
     path: 'kv/defn/hello',
     engineVersion: 2,
     secretValues: [
-      [envVar: 'MEH', vaultKey: 'name']
+      [vaultKey: 'GITHUB_TOKEN']
     ]
   ]
 ]
@@ -28,7 +28,7 @@ node() {
     }
 
     stage('Build') {
-      withVault([vaultSecrets: secrets]) {
+      withVault([vaultSecrets: githubSecrets]) {
         sh "env GITHUB_TOKEN=${GITHUB_TOKEN} /env.sh goreleaser --rm-dist"
       }
     }

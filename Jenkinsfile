@@ -25,6 +25,10 @@ node() {
       sh "./ci/build ${NM_ROLE} ${ID_ROLE}"
     }
 
+    stage('Fake') {
+      sh "git tag ${BUILD_TAG}"
+    }
+
     stage('Build') {
       sh "env GORELEASER_CURRENT_TAG=${BUILD_TAG} /env.sh goreleaser build --rm-dist"
     }

@@ -57,13 +57,15 @@ node() {
       }
     }
 
-    stage ('Tag') {
+    stage ('Prep') {
+      sh "install -d -m 0700 /tmp/docker"
+      sh "install -d -m 0700 /tmp/docker/${env.BUILD_TAG}"
       sh "git tag ${env.GORELEASER_CURRENT_TAG}"
     }
 
     stage('Build') {
       withVault([vaultSecrets: githubSecrets]) {
-        withEnv(["DOCKER_CONFIG=/tmp/${env.BUILD_TAG}"]) {
+        withEnv(["DOCKER_CONFIG=/tmp/docker/${env.BUILD_TAG}"]) {
           sh "env | grep ^DOCKER_PASSWORD= | cut -d= -f2- | docker login --password-stdin --username ${DOCKER_USERNAME}"
           sh "/env.sh goreleaser --rm-dist"
         }
@@ -71,10 +73,13 @@ node() {
     }
 
     stage('Test Docker image') {
-      withEnv(["DOCKER_CONFIG=/tmp/${env.BUILD_TAG}"]) {
+      withEnv(["DOCKER_CONFIG=/tmp/docker/${env.BUILD_TAG}"]) {
         sh "/env.sh docker run --rm defn/hello:${env.GORELEASER_CURRENT_TAG}-amd64"
       }
     }
 
+    stage('Cleanup') {
+      sh "rm -rf /tmp/docker/${env.BUILD_TAG}"
+    }
   }
 }

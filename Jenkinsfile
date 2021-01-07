@@ -16,7 +16,7 @@ node() {
       env.SCM_VERSION = sh(
         returnStdout: true,
         script: "git rev-parse --abbrev-ref HEAD"
-      )
+      ).trim()
     }
 
     stage ('Secrets') {

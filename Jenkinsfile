@@ -10,28 +10,26 @@ node() {
     vaultAddr: env.VAULT_ADDR ]]) {
 
     stage ('Pipeline wrapped secret_id') {
-      def WRAPPED_SID = ''
-      env.WRAPPED_SID = sh(
+      def WRAPPED_SID = sh(
         returnStdout: true,
         script: "vault write -field=wrapping_token -wrap-ttl=200s -f auth/approle/role/${ROLE}/secret-id"
       )
     }
 
     stage ('Pipeline unwrap secret_id') {
-      def UNWRAPPED_SID = ''
-      env.UNWRAPPED_SID = sh(
+      def UNWRAPPED_SID = sh(
         returnStdout: true,
         script: "vault unwrap -field=secret_id ${WRAPPED_SID}"
       )
     }
 
     stage ('Pipeline login token') {
-      sh '''
+      sh """
         echo set +x > token
         echo -n export VAULT_TOKEN= >> token
         vault write -field=token auth/approle/login role_id=${ROLE_ID} secret_id=${UNWRAPPED_SID} | tee -a token
         (echo; echo set -x) >> token"
-      '''
+      """
     }
 
     stage ('Pipeline token info') {

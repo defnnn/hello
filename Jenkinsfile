@@ -9,7 +9,7 @@ def ID_ROLE = 'b45fcd66-6e60-3c2f-57e9-c0c5ecd59df2'
 
 def githubSecrets = [
   [ 
-    path: 'kv/defn/hello',
+    path: 'kv/jenkins/common',
     secretValues: [
       [vaultKey: 'GITHUB_TOKEN'],
       [vaultKey: 'DOCKER_USERNAME'],

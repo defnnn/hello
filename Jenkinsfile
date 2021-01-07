@@ -11,14 +11,6 @@ node() {
     credentialsId: 'VaultToken',
     vaultAddr: env.VAULT_ADDR ]]) {
 
-    stage ('Env') {
-      def SCM_VERSION = ''
-      env.SCM_VERSION = sh(
-        returnStdout: true,
-        script: "git rev-parse --abbrev-ref HEAD"
-      ).trim()
-    }
-
     stage ('Secrets') {
       sh """
         ./ci/build "${NM_ROLE}" "${ID_ROLE}"
@@ -26,11 +18,11 @@ node() {
     }
 
     stage('Goreleaser') {
-      sh "env SCM_VERSION=${SCM_VERSION} /env.sh goreleaser --snapshot --rm-dist --skip-publish"
+      sh "/env.sh goreleaser --snapshot --rm-dist --skip-publish"
     }
 
     stage('Docker image') {
-      sh "env SCM_VERSION=${SCM_VERSION} /env.sh docker run --rm defn/hello:${SCM_VERSION}-next-amd64"
+      sh "/env.sh docker run --rm defn/hello:${BRANCH_NAME}-next-amd64"
     }
   }
 }

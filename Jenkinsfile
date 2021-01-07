@@ -26,7 +26,7 @@ node() {
     }
 
     stage('Build') {
-      sh "/env.sh goreleaser build --rm-dist"
+      sh "/env.sh goreleaser build --rm-dist --snapshot"
     }
 
     stage('Test Docker image') {
@@ -35,7 +35,7 @@ node() {
 
     stage('Release') {
       withVault([vaultSecrets: githubSecrets]) {
-        sh "/env.sh goreleaser release"
+        sh "/env.sh goreleaser release --snapshot"
       }
     }
 

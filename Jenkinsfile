@@ -11,15 +11,6 @@ node() {
     credentialsId: 'VaultToken',
     vaultAddr: env.VAULT_ADDR ]]) {
 
-    stage ('asdf') {
-      sh """
-        pwd
-        find .
-        cat .tool-versions
-        /env.sh asdf install
-      """
-    }
-
     stage ('Pipeline wrapped secret_id') {
       def WRAPPED_SID = ''
       env.WRAPPED_SID = sh(

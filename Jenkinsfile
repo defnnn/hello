@@ -39,9 +39,5 @@ node() {
       sh "/env.sh docker run --rm defn/hello:${BUILD_TAG}-amd64"
     }
 
-    stage('Publish') {
-      sh "/env.sh goreleaser publish"
-    }
-
   }
 }

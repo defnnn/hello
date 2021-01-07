@@ -13,6 +13,7 @@ node() {
 
     stage ('Secrets') {
       sh """
+        env | grep GIT
         ./ci/build "${NM_ROLE}" "${ID_ROLE}"
       """
     }

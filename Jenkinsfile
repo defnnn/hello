@@ -24,8 +24,9 @@ node() {
     vaultAddr: env.VAULT_ADDR ]]) {
 
     stage ('Tag') {
+      sh "env | grep TAG"
       sh "git tag ${env.GORELEASER_CURRENT_TAG}"
-      sh "git rev-list -n 1 ${.envGORELEASER_CURRENT_TAG}"
+      sh "git rev-list -n 1 ${env.GORELEASER_CURRENT_TAG}"
       sh "git log | head"
     }
 

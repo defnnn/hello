@@ -32,7 +32,7 @@ node() {
     }
 
     stage('Build') {
-      sh "/env.sh goreleaser --snapshot --rm-dist"
+      sh "/env.sh goreleaser --rm-dist"
     }
 
     stage('Test Docker image') {
@@ -40,7 +40,7 @@ node() {
     }
 
     stage('Publish') {
-      sh "/env.sh goreleaser publish --snapshot"
+      sh "/env.sh goreleaser publish"
     }
 
   }

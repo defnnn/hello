@@ -18,7 +18,7 @@ node() {
     }
 
     stage('Goreleaser') {
-      sh "/env.sh goreleaser build --snapshot"
+      sh "/env.sh goreleaser build --snapshot --rm-dist"
     }
 
   }

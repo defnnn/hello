@@ -1,1 +1,2 @@
-terraform 0.14.0-beta2
+golang 1.15.6
+vault 1.6.1

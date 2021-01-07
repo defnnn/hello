@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+function main {
+  local NM_ROLE="$1"; shift
+  local ID_ROLE="$1"; shift
+
+  local WRAPPED_SID="$(/env.sh vault write -field=wrapping_token -wrap-ttl=200s -f "auth/approle/role/${NM_ROLE}/secret-id")"
+  local UNWRAPPED_SID="$(/env.sh vault unwrap -field=secret_id "${WRAPPED_SID}")"
+  export VAULT_TOKEN="$(/env.sh vault write -field=token auth/approle/login role_id="${ID_ROLE}" secret_id="${UNWRAPPED_SID}")"
+}
+
+main "$@"

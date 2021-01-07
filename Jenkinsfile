@@ -8,7 +8,9 @@ def githubSecrets = [
     path: 'kv/defn/hello',
     engineVersion: 2,
     secretValues: [
-      [vaultKey: 'GITHUB_TOKEN']
+      [vaultKey: 'GITHUB_TOKEN'],
+      [vaultKey: 'DOCKER_USERNAME'],
+      [vaultKey: 'DOCKER_PASSWORD']
     ]
   ]
 ]
@@ -36,6 +38,7 @@ node() {
 
     stage('Build') {
       withVault([vaultSecrets: githubSecrets]) {
+        sh "env | grep ^DOCKER_PASSWORD= | cut -d= -f2- | docker login --password-stdin ${DOCKER_USERNAME}"
         sh "/env.sh goreleaser --rm-dist"
       }
     }

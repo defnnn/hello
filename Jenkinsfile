@@ -26,9 +26,8 @@ node() {
       """
 
       withVault([vaultSecrets: secrets]) {
-          sh "env | grep NAME"
-          sh "echo ${NAME}"
-        }
+        sh "env | grep NAME"
+        sh "echo ${NAME}"
       }
     }
 

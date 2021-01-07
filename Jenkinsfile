@@ -21,14 +21,14 @@ node() {
     vaultAddr: env.VAULT_ADDR ]]) {
 
     stage ('Secrets') {
-      sh """
-        ./ci/build "${NM_ROLE}" "${ID_ROLE}"
-      """
-
       withVault([vaultSecrets: secrets]) {
         sh "env | grep NAME"
         sh "echo ${NAME}"
       }
+
+      sh """
+        ./ci/build "${NM_ROLE}" "${ID_ROLE}"
+      """
     }
 
     stage('Goreleaser') {

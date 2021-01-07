@@ -9,18 +9,37 @@ builds:
       - darwin
     goarch:
       - amd64
+      - arm64
     env:
       - CGO_ENABLED=0
 dockers:
   - binaries:
       - main
+    extra_files: []
     goos: linux
     goarch: amd64
     image_templates:
-      - "defn/hello:test"
-    skip_push: true
+      - "defn/hello:{{ .Version }}-amd64"
     dockerfile: Dockerfile
+    use_buildx: true
+    build_flag_templates:
+      - --platform=linux/amd64
+  - binaries:
+      - main
     extra_files: []
+    goos: linux
+    goarch: arm64
+    image_templates:
+      - "defn/hello:{{ .Version }}-arm64"
+    dockerfile: Dockerfile
+    use_buildx: true
+    build_flag_templates:
+      - --platform=linux/arm64/v8
+docker_manifests:
+  - name_template: "defn/hello:{{ .Version }}"
+    image_templates:
+      - "defn/hello:{{ .Version }}-amd64"
+      - "defn/hello:{{ .Version }}-arm64"
 checksum:
   name_template: 'checksums.txt'
 snapshot:

@@ -12,6 +12,11 @@ def secrets = [
   ]
 ]
 
+def vaultConfig = [
+  vaultCredentialId: 'VaultToken',
+  vaultUrl: env.VAULT_ADDR
+]
+
 node() {
   checkout scm
 
@@ -21,7 +26,7 @@ node() {
     vaultAddr: env.VAULT_ADDR ]]) {
 
     stage ('Secrets') {
-      withVault([vaultSecrets: secrets]) {
+      withVault([vaultSecrets: secrets, configuration: vaultConfig]) {
         sh "env | grep NAME"
         sh "echo ${NAME}"
       }

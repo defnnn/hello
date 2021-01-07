@@ -31,12 +31,17 @@ node() {
       }
     }
 
-    stage('Goreleaser') {
+    stage('Build') {
       sh "/env.sh goreleaser --snapshot --rm-dist"
     }
 
-    stage('Docker image') {
+    stage('Test Docker image') {
       sh "/env.sh docker run --rm defn/hello:${BUILD_TAG}-amd64"
     }
+
+    stage('Publish') {
+      sh "/env.sh goreleaser publish --snapshot"
+    }
+
   }
 }

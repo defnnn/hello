@@ -1,5 +1,9 @@
 #!/usr/bin/env groovy
 
+import hudson.util.Secret
+import com.cloudbees.plugins.credentials.CredentialsScope
+import com.datapipe.jenkins.vault.credentials.VaultTokenCredential
+
 def NM_ROLE = 'pipeline'
 def ID_ROLE = 'b45fcd66-6e60-3c2f-57e9-c0c5ecd59df2'
 
@@ -37,10 +41,6 @@ node() {
     stage ('Pipeline Secrets') {
       def PIPELINE_TOKEN = ''
       env.PIPELINE_TOKEN = sh(returnStdout: true, script: "./ci/build ${NM_ROLE} ${ID_ROLE}").trim()
-
-      import hudson.util.Secret
-      import com.cloudbees.plugins.credentials.CredentialsScope
-      import com.datapipe.jenkins.vault.credentials.VaultTokenCredential
 
       VaultTokenCredential pipelineCredential = new VaultTokenCredential(
         CredentialsScope.GLOBAL,

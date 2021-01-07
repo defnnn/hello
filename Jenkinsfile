@@ -25,7 +25,6 @@ node() {
     vaultAddr: env.VAULT_ADDR ]]) {
 
     stage ('Tag') {
-      sh "env| grep TAG"
       sh "git tag ${GORELEASER_CURRENT_TAG}"
     }
 
@@ -40,7 +39,7 @@ node() {
     }
 
     stage('Test Docker image') {
-      sh "/env.sh docker run --rm defn/hello:${BUILD_TAG}-amd64"
+      sh "/env.sh docker run --rm defn/hello:${GORELEASER_CURRENT_TAG}-amd64"
     }
 
   }

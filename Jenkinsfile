@@ -45,7 +45,7 @@ node() {
       VaultTokenCredential pipelineCredential = new VaultTokenCredential(
         CredentialsScope.GLOBAL,
         'defn--hello-vault', 'defn--hello-vault',
-        Secret.fromString(PIPELINE_TOKEN)
+        Secret.fromString(env.PIPELINE_TOKEN)
       )
 
       def pipelineConfiguration = [
@@ -53,7 +53,6 @@ node() {
       ]
 
       withVault([vaultSecrets: pipelineSecrets, configuration: pipelineConfiguration]) {
-        sh "echo ${env.PIPELINE_TOKEN}"
         sh "env | grep MEH"
       }
     }

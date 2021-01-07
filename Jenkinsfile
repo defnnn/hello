@@ -25,14 +25,12 @@ node() {
       sh """
         ./ci/build "${NM_ROLE}" "${ID_ROLE}"
       """
-
-      withVault([vaultSecrets: secrets]) {
-        sh "echo ${MEH}"
-      }
     }
 
     stage('Build') {
-      sh "/env.sh goreleaser --rm-dist"
+      withVault([vaultSecrets: secrets]) {
+        sh "/env.sh goreleaser --rm-dist"
+      }
     }
 
     stage('Test Docker image') {

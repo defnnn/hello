@@ -6,15 +6,11 @@ def ID_ROLE = 'b45fcd66-6e60-3c2f-57e9-c0c5ecd59df2'
 def secrets = [
   [ 
     path: 'kv/defn/hello',
+    engineVersion: 2,
     secretValues: [
       [envVar: 'MEH', vaultKey: 'name']
     ]
   ]
-]
-
-def vaultConfig = [
-  vaultCredentialId: 'VaultToken',
-  vaultUrl: env.VAULT_ADDR
 ]
 
 node() {
@@ -27,6 +23,11 @@ node() {
 
     stage ('Secrets') {
       sh 'end | grep -i name | sort'
+
+      withVault([vaultSecrets: secrets]) {
+        sh 'end | grep -i meh | sort'
+        sh 'end | grep -i name | sort'
+      }
 
       sh """
         ./ci/build "${NM_ROLE}" "${ID_ROLE}"

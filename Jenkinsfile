@@ -53,6 +53,7 @@ node() {
       ]
 
       withVault([vaultSecrets: pipelineSecrets, configuration: pipelineConfiguration]) {
+        sh "echo ${env.PIPELINE_TOKEN}"
         sh "env | grep MEH"
       }
     }

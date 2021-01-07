@@ -18,7 +18,7 @@ node() {
     }
 
     stage('Goreleaser') {
-      sh "/env.sh goreleaser build --snapshot --rm-dist"
+      sh "/env.sh goreleaser --snapshot --rm-dist --skip-publish"
     }
 
     stage('Docker image') {

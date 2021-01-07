@@ -3,25 +3,24 @@ before:
     # You may remove this if you don't use go modules.
     - go mod download
 builds:
-  - env:
-      - CGO_ENABLED=0
+  - binary: main
     goos:
       - linux
       - darwin
     goarch:
       - amd64
-      - arm64
+    env:
+      - CGO_ENABLED=0
 dockers:
-  image_templates:
-    - "defn/hello:test"
-  dockerfile: Dockerfile
-  use_buildx: true
-  skip_push: true
-archives:
-  - replacements:
-      darwin: Darwin
-      linux: Linux
-      amd64: x86_64
+  - binaries:
+      - main
+    goos: linux
+    goarch: amd64
+    image_templates:
+      - "defn/hello:test"
+    skip_push: true
+    dockerfile: Dockerfile
+    extra_files: []
 checksum:
   name_template: 'checksums.txt'
 snapshot:

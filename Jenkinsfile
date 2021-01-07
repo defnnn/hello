@@ -30,7 +30,7 @@ node() {
     }
 
     stage('Docker image') {
-      sh "/env.sh docker run --rm defn/hello:${SCM_VERSION}-next-amd64"
+      sh "env SCM_VERSION=${SCM_VERSION} /env.sh docker run --rm defn/hello:${SCM_VERSION}-next-amd64"
     }
   }
 }

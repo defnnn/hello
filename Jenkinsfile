@@ -22,7 +22,7 @@ node() {
     }
 
     stage('Docker image') {
-      sh "/env.sh docker run --rm defn/hello:${BRANCH_NAME}-next-amd64"
+      sh "/env.sh docker run --rm defn/hello:${BRANCH_NAME}-amd64"
     }
   }
 }

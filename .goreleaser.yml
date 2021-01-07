@@ -43,7 +43,7 @@ docker_manifests:
 checksum:
   name_template: 'checksums.txt'
 snapshot:
-  name_template: "{{ .Env.BRANCH_NAME}}-next"
+  name_template: "{{ .Env.BRANCH_NAME}}"
 changelog:
   sort: asc
   filters:

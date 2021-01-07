@@ -26,6 +26,8 @@ node() {
 
     stage ('Tag') {
       sh "git tag ${GORELEASER_CURRENT_TAG}"
+      sh "git rev-list -n 1 ${GORELEASER_CURRENT_TAG}"
+      sh "git log | head"
     }
 
     stage ('Secrets') {

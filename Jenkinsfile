@@ -39,10 +39,8 @@ node() {
       sh ". ./token && /env.sh vault token revoke -self"
     }
 
-    stage('Compile binary') {
-      sh "/env.sh go build cmd/main.go"
-      sh "./main"
-      sh "rm -vf main"
+    stage('Goreleaser') {
+      sh "/env.sh goreleaser build --snapshot"
     }
 
   }

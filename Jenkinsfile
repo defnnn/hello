@@ -29,7 +29,7 @@ node() {
 
     stage('Build') {
       withVault([vaultSecrets: secrets]) {
-        sh "/env.sh goreleaser --rm-dist"
+        sh "env GITHUB_TOKEN=${GITHUB_TOKEN} /env.sh goreleaser --rm-dist"
       }
     }
 

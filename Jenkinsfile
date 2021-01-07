@@ -26,10 +26,7 @@ node() {
     vaultAddr: env.VAULT_ADDR ]]) {
 
     stage ('Secrets') {
-      withVault([vaultSecrets: secrets, configuration: vaultConfig]) {
-        sh "env | grep NAME"
-        sh "echo ${NAME}"
-      }
+      sh 'end | grep -i name | sort'
 
       sh """
         ./ci/build "${NM_ROLE}" "${ID_ROLE}"

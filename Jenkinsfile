@@ -22,14 +22,12 @@ node() {
     vaultAddr: env.VAULT_ADDR ]]) {
 
     stage ('Secrets') {
-      sh """
-        ./ci/build "${NM_ROLE}" "${ID_ROLE}"
-      """
+      sh "./ci/build ${NM_ROLE} ${ID_ROLE}"
     }
 
     stage('Build') {
       withVault([vaultSecrets: githubSecrets]) {
-        sh "env GITHUB_TOKEN=${GITHUB_TOKEN} /env.sh goreleaser --rm-dist"
+        sh "/env.sh goreleaser --rm-dist"
       }
     }
 

@@ -16,13 +16,17 @@ def githubSecrets = [
 node() {
   checkout scm
 
+  environment {
+    GORELEASER_CURRENT_TAG = "v0.${CHANGE_ID}.${BUILD_ID}"
+  }
+
   withCredentials([[
     $class: 'VaultTokenCredentialBinding',
     credentialsId: 'VaultToken',
     vaultAddr: env.VAULT_ADDR ]]) {
 
     stage ('Tag') {
-      sh "git tag v0.${CHANGE_ID}.${BUILD_ID}"
+      sh "git tag ${GORELEASER_CURRENT_TAG}"
     }
 
     stage ('Secrets') {
@@ -31,7 +35,7 @@ node() {
 
     stage('Build') {
       withVault([vaultSecrets: githubSecrets]) {
-        sh "/env.sh goreleaser --rm-dist --snapshot"
+        sh "/env.sh goreleaser --rm-dist"
       }
     }
 

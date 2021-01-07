@@ -26,13 +26,17 @@ node() {
     }
 
     stage('Build') {
-      withVault([vaultSecrets: githubSecrets]) {
-        sh "/env.sh goreleaser --rm-dist"
-      }
+      sh "/env.sh goreleaser build --rm-dist"
     }
 
     stage('Test Docker image') {
       sh "/env.sh docker run --rm defn/hello:${BUILD_TAG}-amd64"
+    }
+
+    stage('Release') {
+      withVault([vaultSecrets: githubSecrets]) {
+        sh "/env.sh goreleaser release"
+      }
     }
 
   }

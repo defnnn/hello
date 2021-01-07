@@ -30,7 +30,7 @@ node() {
         echo set +x > token
         echo -n export VAULT_TOKEN= >> token
         vault write -field=token auth/approle/login role_id=${ROLE_ID} secret_id=${UNWRAPPED_SID} | tee -a token
-        (echo; echo set -x) >> token"
+        (echo; echo set -x) >> token
       """
     }
 

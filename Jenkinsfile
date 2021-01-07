@@ -38,7 +38,7 @@ node() {
 
     stage('Build') {
       withVault([vaultSecrets: githubSecrets]) {
-        sh "env | grep ^DOCKER_PASSWORD= | cut -d= -f2- | docker login --password-stdin ${DOCKER_USERNAME}"
+        sh "env | grep ^DOCKER_PASSWORD= | cut -d= -f2- | docker login --password-stdin --username ${DOCKER_USERNAME}"
         sh "/env.sh goreleaser --rm-dist"
       }
     }

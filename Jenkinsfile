@@ -16,9 +16,8 @@ def githubSecrets = [
 node() {
   checkout scm
 
-  environment {
-    GORELEASER_CURRENT_TAG = "v0.${CHANGE_ID}.${BUILD_ID}"
-  }
+  def GORELEASER_CURRENT_TAG = ''
+  env.GORELEASER_CURRENT_TAG = "v0.${CHANGE_ID}.${BUILD_ID}"
 
   withCredentials([[
     $class: 'VaultTokenCredentialBinding',

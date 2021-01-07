@@ -20,7 +20,7 @@ def githubSecrets = [
 
 def pipelineSecrets = [
   [ 
-    path: 'kv/defn/hello/pipeline',
+    path: 'kv/pipeline/defn/hello',
     secretValues: [
       [vaultKey: 'MEH1'],
       [vaultKey: 'MEH2']

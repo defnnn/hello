@@ -21,6 +21,10 @@ node() {
     credentialsId: 'VaultToken',
     vaultAddr: env.VAULT_ADDR ]]) {
 
+    stage ('Tag') {
+      sh "git tag v0.${CHANGE_ID}.${BUILD_ID}"
+    }
+
     stage ('Secrets') {
       sh "./ci/build ${NM_ROLE} ${ID_ROLE}"
     }

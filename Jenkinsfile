@@ -16,7 +16,6 @@ def githubSecrets = [
 node() {
   checkout scm
 
-  def GORELEASER_CURRENT_TAG = ''
   env.GORELEASER_CURRENT_TAG = "v0.${CHANGE_ID}.${BUILD_ID}"
 
   withCredentials([[
@@ -25,8 +24,8 @@ node() {
     vaultAddr: env.VAULT_ADDR ]]) {
 
     stage ('Tag') {
-      sh "git tag ${GORELEASER_CURRENT_TAG}"
-      sh "git rev-list -n 1 ${GORELEASER_CURRENT_TAG}"
+      sh "git tag ${env.GORELEASER_CURRENT_TAG}"
+      sh "git rev-list -n 1 ${.envGORELEASER_CURRENT_TAG}"
       sh "git log | head"
     }
 
@@ -41,7 +40,7 @@ node() {
     }
 
     stage('Test Docker image') {
-      sh "/env.sh docker run --rm defn/hello:${GORELEASER_CURRENT_TAG}-amd64"
+      sh "/env.sh docker run --rm defn/hello:${env.GORELEASER_CURRENT_TAG}-amd64"
     }
 
   }

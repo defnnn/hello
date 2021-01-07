@@ -22,11 +22,11 @@ node() {
     vaultAddr: env.VAULT_ADDR ]]) {
 
     stage ('Secrets') {
-      sh 'end | grep -i name | sort'
+      sh 'env | grep -i name | sort'
 
       withVault([vaultSecrets: secrets]) {
-        sh 'end | grep -i meh | sort'
-        sh 'end | grep -i name | sort'
+        sh 'env | grep -i meh | sort'
+        sh 'env | grep -i name | sort'
       }
 
       sh """

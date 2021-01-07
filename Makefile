@@ -27,3 +27,6 @@ recreate:
 
 logs:
 	docker-compose logs -f
+
+pr:
+	gh pr create --web

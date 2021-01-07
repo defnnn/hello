@@ -63,13 +63,17 @@ node() {
 
     stage('Build') {
       withVault([vaultSecrets: githubSecrets]) {
-        sh "env | grep ^DOCKER_PASSWORD= | cut -d= -f2- | docker login --password-stdin --username ${DOCKER_USERNAME}"
-        sh "/env.sh goreleaser --rm-dist"
+        withEnv(["DOCKER_CONFIG=/tmp/${env.BUILD_TAG}"]) {
+          sh "env | grep ^DOCKER_PASSWORD= | cut -d= -f2- | docker login --password-stdin --username ${DOCKER_USERNAME}"
+          sh "/env.sh goreleaser --rm-dist"
+        }
       }
     }
 
     stage('Test Docker image') {
-      sh "/env.sh docker run --rm defn/hello:${env.GORELEASER_CURRENT_TAG}-amd64"
+      withEnv(["DOCKER_CONFIG=/tmp/${env.BUILD_TAG}"]) {
+        sh "/env.sh docker run --rm defn/hello:${env.GORELEASER_CURRENT_TAG}-amd64"
+      }
     }
 
   }

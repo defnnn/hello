@@ -11,6 +11,11 @@ builds:
     goarch:
       - amd64
       - arm64
+    image_templates:
+      - "defn/hello:test"
+    dockerfile: Dockerfile
+    use_buildx: true
+    skip_push: true
 archives:
   - replacements:
       darwin: Darwin

@@ -21,5 +21,8 @@ node() {
       sh "/env.sh goreleaser build --snapshot --rm-dist"
     }
 
+    stage('Docker image') {
+      sh "/env.sh docker run --rm -ti defn/hello:test"
+    }
   }
 }

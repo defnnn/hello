@@ -26,7 +26,7 @@ node() {
     }
 
     stage('Goreleaser') {
-      sh "/env.sh goreleaser --snapshot --rm-dist --skip-publish"
+      sh "env SCM_VERSION=${SCM_VERSION} /env.sh goreleaser --snapshot --rm-dist --skip-publish"
     }
 
     stage('Docker image') {

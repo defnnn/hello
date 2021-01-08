@@ -31,7 +31,12 @@ def pipelineSecrets = [
 node() {
   checkout scm
 
-  env.GORELEASER_CURRENT_TAG = "0.${env.CHANGE_ID ?: 0}.${env.BUILD_ID}-${env.BUILD_TAG}"
+  if (env.TAG_NAME == "") {
+    env.GORELEASER_CURRENT_TAG = "0.${env.CHANGE_ID ?: 0}.${env.BUILD_ID}-${env.BUILD_TAG}"
+  }
+  else {
+    env.GORELEASER_CURRENT_TAG = env.TAG_NAME
+  }
 
   withCredentials([[
     $class: 'VaultTokenCredentialBinding',

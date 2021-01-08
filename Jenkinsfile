@@ -4,7 +4,7 @@ import hudson.util.Secret
 import com.cloudbees.plugins.credentials.CredentialsScope
 import com.datapipe.jenkins.vault.credentials.VaultAppRoleCredential
 
-@Library('defn/jenkins-kiki@main')
+def kiki = library('defn/jenkins-kiki@main')
 
 def NM_DOCKER = 'defn/hello'
 def VENDOR_PREFIX = ''
@@ -75,7 +75,7 @@ node() {
       sh "true"
     }
 
-    meh({})
+    kiki.meh({})
 
     withVault([vaultSecrets: githubSecrets]) {
       withEnv(["DOCKER_CONFIG=/tmp/docker/${env.BUILD_TAG}"]) {

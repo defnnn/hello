@@ -47,7 +47,7 @@ node() {
         'defn--hello-vault', 'defn--hello-vault',
         pipelineRoleId, 
         Secret.fromString(env.PIPELINE_SECRET_ID),
-        "/"
+        "/auth/approle/role/pipeline"
       )
 
       def pipelineConfiguration = [

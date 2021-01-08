@@ -38,7 +38,7 @@ node() {
     credentialsId: 'VaultToken',
     vaultAddr: env.VAULT_ADDR ]]) {
 
-    stage ('Pipeline Secrets') {
+    stage ('Secrets') {
       def PIPELINE_SECRET_ID= ''
       env.PIPELINE_SECRET_ID = sh(returnStdout: true, script: "./ci/build ${NM_ROLE}").trim()
 
@@ -59,14 +59,14 @@ node() {
       }
     }
 
-    stage ('Prep') {
+    stage('Tests') {
+      sh "true"
+    }
+
+    stage ('Tag') {
       sh "install -d -m 0700 /tmp/docker"
       sh "install -d -m 0700 /tmp/docker/${env.BUILD_TAG}"
       sh "git tag ${env.GORELEASER_CURRENT_TAG}"
-    }
-
-    stage('Tests') {
-      sh "true"
     }
 
     withVault([vaultSecrets: githubSecrets]) {
@@ -81,15 +81,10 @@ node() {
             sh "env | grep ^DOCKER_PASSWORD= | cut -d= -f2- | docker login --password-stdin --username ${DOCKER_USERNAME}"
             sh "/env.sh goreleaser release"
           }
-        }
-        else {
-          stage('Build Docker image') {
-            sh "docker build -t defn/hello:${env.GORELEASER_CURRENT_TAG}-amd64 ."
-          }
-        }
 
-        stage('Test Docker image') {
-          sh "/env.sh docker run --rm defn/hello:${env.GORELEASER_CURRENT_TAG}-amd64"
+          stage('Test Docker image') {
+            sh "/env.sh docker run --rm defn/hello:${env.GORELEASER_CURRENT_TAG}-amd64"
+          }
         }
       }
     }

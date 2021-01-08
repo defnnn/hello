@@ -69,7 +69,7 @@ node() {
       withEnv(["DOCKER_CONFIG=/tmp/docker/${env.BUILD_TAG}"]) {
         stage('Build') {
           sh "env | grep ^DOCKER_PASSWORD= | cut -d= -f2- | docker login --password-stdin --username ${DOCKER_USERNAME}"
-          sh "/env.sh goreleaser build --rm-dist --skip-publish"
+          sh "/env.sh goreleaser build --rm-dist"
         }
 
         stage('Test Docker image') {

@@ -20,6 +20,7 @@ dockers:
     goarch: amd64
     image_templates:
       - "defn/hello:{{ .Version }}-amd64"
+      - "defn/hello:v{{ .Version }}-amd64"
     dockerfile: Dockerfile
     use_buildx: true
     build_flag_templates:
@@ -30,6 +31,7 @@ dockers:
     goos: linux
     goarch: arm64
     image_templates:
+      - "defn/hello:{{ .Version }}-arm64"
       - "defn/hello:{{ .Version }}-arm64"
     dockerfile: Dockerfile
     use_buildx: true

@@ -74,21 +74,21 @@ node() {
 
     withVault([vaultSecrets: githubSecrets]) {
       withEnv(["DOCKER_CONFIG=/tmp/docker/${env.BUILD_TAG}"]) {
-        stage('Build') {
-          sh "install -d -m 0700 /tmp/docker"
-          sh "install -d -m 0700 /tmp/docker/${env.BUILD_TAG}"
-          sh "env | grep ^DOCKER_PASSWORD= | cut -d= -f2- | docker login --password-stdin --username ${DOCKER_USERNAME}"
-          sh "/env.sh goreleaser build --rm-dist"
-        }
-
         if (env.TAG_NAME) {
           stage('Release') {
+            sh "install -d -m 0700 /tmp/docker"
+            sh "install -d -m 0700 /tmp/docker/${env.BUILD_TAG}"
             sh "env | grep ^DOCKER_PASSWORD= | cut -d= -f2- | docker login --password-stdin --username ${DOCKER_USERNAME}"
-            sh "/env.sh goreleaser release"
+            sh "/env.sh goreleaser release --rm-dist"
           }
 
           stage('Test Docker image') {
             sh "/env.sh docker run --rm defn/hello:${env.GORELEASER_CURRENT_TAG}-amd64"
+          }
+        }
+        else {
+          stage('Build') {
+            sh "/env.sh goreleaser build --rm-dist"
           }
         }
       }

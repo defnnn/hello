@@ -38,6 +38,10 @@ node() {
     env.GORELEASER_CURRENT_TAG = env.TAG_NAME
   }
 
+  stage('Debug') {
+    sh 'env | sort'
+  }
+
   withCredentials([[
     $class: 'VaultTokenCredentialBinding',
     credentialsId: 'VaultToken',

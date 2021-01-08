@@ -4,7 +4,7 @@ import hudson.util.Secret
 import com.cloudbees.plugins.credentials.CredentialsScope
 import com.datapipe.jenkins.vault.credentials.VaultAppRoleCredential
 
-def NM_DOCKER = 'defn/consul'
+def NM_DOCKER = 'defn/hello'
 def VENDOR_PREFIX = ''
 
 def NM_PROJECT = 'defn/hello'

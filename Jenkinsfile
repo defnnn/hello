@@ -84,7 +84,7 @@ node() {
           }
 
           stage('Test Docker image') {
-            sh "/env.sh docker run --rm --entrypoint /main " + NM_DOCKER + ":" + VENDOR_PREFIX + "${env.GORELEASER_CURRENT_TAG}-amd64"
+            sh "/env.sh docker run --rm --entrypoint /main " + NM_DOCKER + ":" + VENDOR_PREFIX + "${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"
           }
         }
         else {

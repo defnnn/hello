@@ -76,7 +76,7 @@ node() {
           sh "/env.sh docker run --rm defn/hello:${env.GORELEASER_CURRENT_TAG}-amd64"
         }
 
-        if (env.BRANCH_NAME == 'master') {
+        if (env.BRANCH_NAME == 'main') {
           stage('Release') {
             sh "env | grep ^DOCKER_PASSWORD= | cut -d= -f2- | docker login --password-stdin --username ${DOCKER_USERNAME}"
             sh "/env.sh goreleaser release"

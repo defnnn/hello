@@ -81,7 +81,7 @@ node() {
           sh "/env.sh goreleaser build --rm-dist"
         }
 
-        if (env.BRANCH_NAME == 'main') {
+        if (env.TAG_NAME) {
           stage('Release') {
             sh "env | grep ^DOCKER_PASSWORD= | cut -d= -f2- | docker login --password-stdin --username ${DOCKER_USERNAME}"
             sh "/env.sh goreleaser release"

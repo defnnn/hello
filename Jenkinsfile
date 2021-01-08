@@ -5,9 +5,8 @@ import com.cloudbees.plugins.credentials.CredentialsScope
 import com.datapipe.jenkins.vault.credentials.VaultAppRoleCredential
 
 def NM_PROJECT = 'defn/hello'
-
-def NM_ROLE = 'pipeline'
-def pipelineRoleId = 'b45fcd66-6e60-3c2f-57e9-c0c5ecd59df2'
+def NM_JOB= 'defn--hello'
+def pipelineRoleId = '2b4708d4-4d14-3a54-fd3c-c080e6ebfec8'
 
 def githubSecrets = [
   [ 
@@ -22,7 +21,7 @@ def githubSecrets = [
 
 def pipelineSecrets = [
   [ 
-    path: 'kv/pipeline/' + NM_PROJECT,
+    path: 'kv/pipeline/' + NM_JOB,
     secretValues: [
     ]
   ]
@@ -49,11 +48,11 @@ node() {
 
     stage ('Secrets') {
       def PIPELINE_SECRET_ID= ''
-      env.PIPELINE_SECRET_ID = sh(returnStdout: true, script: "./ci/build ${NM_ROLE}").trim()
+      env.PIPELINE_SECRET_ID = sh(returnStdout: true, script: "./ci/build ${NM_JOB}").trim()
 
       VaultAppRoleCredential pipelineCredential = new VaultAppRoleCredential(
         CredentialsScope.GLOBAL,
-        NM_PROJECT + '-vault', NM_PROJECT + '-vault',
+        NM_JOB + '-vault', NM_JOB + '-vault',
         pipelineRoleId, 
         Secret.fromString(env.PIPELINE_SECRET_ID),
         "approle"

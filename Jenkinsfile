@@ -2,7 +2,7 @@
 
 import hudson.util.Secret
 import com.cloudbees.plugins.credentials.CredentialsScope
-import com.datapipe.jenkins.vault.credentials.VaultTokenCredential
+import com.datapipe.jenkins.vault.credentials.VaultAppRoleCredential
 
 def NM_ROLE = 'pipeline'
 def pipelineRoleId = 'b45fcd66-6e60-3c2f-57e9-c0c5ecd59df2'

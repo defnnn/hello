@@ -4,6 +4,8 @@ import hudson.util.Secret
 import com.cloudbees.plugins.credentials.CredentialsScope
 import com.datapipe.jenkins.vault.credentials.VaultAppRoleCredential
 
+def NM_PROJECT = 'defn/hello'
+
 def NM_ROLE = 'pipeline'
 def pipelineRoleId = 'b45fcd66-6e60-3c2f-57e9-c0c5ecd59df2'
 
@@ -20,10 +22,8 @@ def githubSecrets = [
 
 def pipelineSecrets = [
   [ 
-    path: 'kv/pipeline/defn/hello',
+    path: 'kv/pipeline/' + NM_PROJECT,
     secretValues: [
-      [vaultKey: 'MEH1'],
-      [vaultKey: 'MEH2']
     ]
   ]
 ]
@@ -53,7 +53,7 @@ node() {
 
       VaultAppRoleCredential pipelineCredential = new VaultAppRoleCredential(
         CredentialsScope.GLOBAL,
-        'defn--hello-vault', 'defn--hello-vault',
+        NM_PROJECT + '-vault', NM_PROJECT + '-vault',
         pipelineRoleId, 
         Secret.fromString(env.PIPELINE_SECRET_ID),
         "approle"
@@ -64,7 +64,6 @@ node() {
       ]
 
       withVault([vaultSecrets: pipelineSecrets, configuration: pipelineConfiguration]) {
-        sh "env | grep MEH"
       }
     }
 
@@ -83,7 +82,7 @@ node() {
           }
 
           stage('Test Docker image') {
-            sh "/env.sh docker run --rm defn/hello:${env.GORELEASER_CURRENT_TAG}-amd64"
+            sh "/env.sh docker run --rm " + NM_PROJECT + ":${env.GORELEASER_CURRENT_TAG}-amd64"
           }
         }
         else {

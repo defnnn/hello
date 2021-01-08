@@ -4,6 +4,9 @@ import hudson.util.Secret
 import com.cloudbees.plugins.credentials.CredentialsScope
 import com.datapipe.jenkins.vault.credentials.VaultAppRoleCredential
 
+def NM_DOCKER = 'defn/consul'
+def VENDOR_PREFIX = ''
+
 def NM_PROJECT = 'defn/hello'
 def NM_JOB= 'defn--hello'
 def pipelineRoleId = '7a87edd4-68d9-d7fb-974b-752f030c65b9'
@@ -81,7 +84,7 @@ node() {
           }
 
           stage('Test Docker image') {
-            sh "/env.sh docker run --rm " + NM_PROJECT + ":${env.GORELEASER_CURRENT_TAG}-amd64"
+            sh "/env.sh docker run --rm " + NM_DOCKER + ":" + VENDOR_PREFIX + "${env.GORELEASER_CURRENT_TAG}-amd64"
           }
         }
         else {

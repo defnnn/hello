@@ -9,6 +9,9 @@ build: # Build defn/hello
 push: # Push defn/hello
 	docker push defn/hello
 
+pull : # Pull defn/hello
+	docker pull defn/hello
+
 bash: # Run bash shell with defn/hello
 	docker run --rm -ti --entrypoint bash defn/hello
 

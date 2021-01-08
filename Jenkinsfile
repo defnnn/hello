@@ -72,7 +72,7 @@ node() {
           sh "/env.sh goreleaser build --rm-dist"
         }
 
-        stage('Test Docker image') {
+        stage('Tests') {
           sh "/env.sh docker run --rm defn/hello:${env.GORELEASER_CURRENT_TAG}-amd64"
         }
 
@@ -81,6 +81,15 @@ node() {
             sh "env | grep ^DOCKER_PASSWORD= | cut -d= -f2- | docker login --password-stdin --username ${DOCKER_USERNAME}"
             sh "/env.sh goreleaser release"
           }
+        }
+        else {
+          stage('Build Docker image') {
+            sh "docker build -t defn/hello:${env.GORELEASER_CURRENT_TAG}-amd64 ."
+          }
+        }
+
+        stage('Test Docker image') {
+          sh "/env.sh docker run --rm defn/hello:${env.GORELEASER_CURRENT_TAG}-amd64"
         }
       }
     }

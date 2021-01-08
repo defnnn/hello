@@ -75,7 +75,7 @@ node() {
       sh "true"
     }
 
-    kiki.meh({})
+    meh({})
 
     withVault([vaultSecrets: githubSecrets]) {
       withEnv(["DOCKER_CONFIG=/tmp/docker/${env.BUILD_TAG}"]) {

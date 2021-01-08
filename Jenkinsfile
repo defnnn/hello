@@ -46,7 +46,8 @@ node() {
         CredentialsScope.GLOBAL,
         'defn--hello-vault', 'defn--hello-vault',
         pipelineRoleId, 
-        Secret.fromString(env.PIPELINE_SECRET_ID)
+        Secret.fromString(env.PIPELINE_SECRET_ID),
+        "/"
       )
 
       def pipelineConfiguration = [

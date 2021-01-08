@@ -6,7 +6,7 @@ import com.datapipe.jenkins.vault.credentials.VaultAppRoleCredential
 
 def NM_PROJECT = 'defn/hello'
 def NM_JOB= 'defn--hello'
-def pipelineRoleId = '2b4708d4-4d14-3a54-fd3c-c080e6ebfec8'
+def pipelineRoleId = '7a87edd4-68d9-d7fb-974b-752f030c65b9'
 
 def githubSecrets = [
   [ 

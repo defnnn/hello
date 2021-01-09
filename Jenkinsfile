@@ -14,17 +14,15 @@ def config = [
   ]]
 ]
 
-node() {
-  goMain(config) {
-    if (env.TAG_NAME) {
-      stage('Test Docker image') {
-        sh "/env.sh docker run --rm --entrypoint /hello defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"
-      }
+goMain(config) {
+  if (env.TAG_NAME) {
+    stage('Test Docker image') {
+      sh "/env.sh docker run --rm --entrypoint /hello defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"
     }
-    else {
-      stage('Test') {
-        sh "uname -a"
-      }
+  }
+  else {
+    stage('Test') {
+      sh "uname -a"
     }
   }
 }

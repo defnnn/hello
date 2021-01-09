@@ -15,7 +15,7 @@ def jenkinsSecrets = [
 
 def pipelineSecrets = [
   [ 
-    path: 'kv/pipeline/' + nmJob,
+    path: 'kv/pipeline/${env.JOB_NAME}',
     secretValues: [
       [vaultKey: 'MEH1'],
       [vaultKey: 'MEH2']
@@ -24,7 +24,7 @@ def pipelineSecrets = [
 ]
 
 node() {
-  goMain('defn--hello', '7a87edd4-68d9-d7fb-974b-752f030c65b9', jenkinsSecrets, pipelineSecrets) {
+  goMain(env.JOB_NAME, '7a87edd4-68d9-d7fb-974b-752f030c65b9', jenkinsSecrets, pipelineSecrets) {
     if (env.TAG_NAME) {
       stage('Test Docker image') {
         sh "/env.sh docker run --rm --entrypoint /hello defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"

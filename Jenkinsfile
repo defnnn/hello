@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-def kiki = library 'defn/jenkins-kiki@main'
+library 'defn/jenkins-kiki@main'
 
 def NM_DOCKER = 'defn/hello'
 def VENDOR_PREFIX = ''
@@ -32,18 +32,7 @@ def pipelineSecrets = [
 ]
 
 node() {
-  checkout scm
-
-  if (env.TAG_NAME == null) {
-    env.GORELEASER_CURRENT_TAG = "0.${env.CHANGE_ID ?: 0}.${env.BUILD_ID}-${env.BUILD_TAG}"
-
-    stage('Tag') {
-      sh "git tag ${env.GORELEASER_CURRENT_TAG}"
-    }
-  }
-  else {
-    env.GORELEASER_CURRENT_TAG = env.TAG_NAME
-  }
+  prepScm()
 
   withCredentials([[
     $class: 'VaultTokenCredentialBinding',
@@ -65,32 +54,21 @@ node() {
       sh "true"
     }
 
-    meh({})
-
     withVault([vaultSecrets: githubSecrets]) {
       withEnv(["DOCKER_CONFIG=/tmp/docker/${env.BUILD_TAG}"]) {
         if (env.TAG_NAME) {
-          stage('Release') {
-            sh "install -d -m 0700 /tmp/docker"
-            sh "install -d -m 0700 /tmp/docker/${env.BUILD_TAG}"
-            sh "env | grep ^DOCKER_PASSWORD= | cut -d= -f2- | docker login --password-stdin --username ${DOCKER_USERNAME}"
-            sh "/env.sh goreleaser release --rm-dist"
-          }
+          goRelease()
 
           stage('Test Docker image') {
             sh "/env.sh docker run --rm --entrypoint /" + NM_BINARY + "  " + NM_DOCKER + ":" + VENDOR_PREFIX + "${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"
           }
         }
         else {
-          stage('Build') {
-            sh "/env.sh goreleaser build --rm-dist"
-          }
+          GoBuild()
         }
       }
     }
-
-    stage('Cleanup') {
-      sh "rm -rf /tmp/docker/${env.BUILD_TAG}"
-    }
   }
+
+  cleanup()
 }

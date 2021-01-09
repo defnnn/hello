@@ -1,9 +1,5 @@
 #!/usr/bin/env groovy
 
-import hudson.util.Secret
-import com.cloudbees.plugins.credentials.CredentialsScope
-import com.datapipe.jenkins.vault.credentials.VaultAppRoleCredential
-
 def kiki = library 'defn/jenkins-kiki@main'
 
 def NM_DOCKER = 'defn/hello'
@@ -56,17 +52,7 @@ node() {
       def PIPELINE_SECRET_ID= ''
       env.PIPELINE_SECRET_ID = sh(returnStdout: true, script: "./ci/build ${NM_JOB}").trim()
 
-      VaultAppRoleCredential pipelineCredential = new VaultAppRoleCredential(
-        CredentialsScope.GLOBAL,
-        NM_JOB + '-vault', NM_JOB + '-vault',
-        pipelineRoleId, 
-        Secret.fromString(env.PIPELINE_SECRET_ID),
-        "approle"
-      )
-
-      def pipelineConfiguration = [
-        vaultCredential: pipelineCredential
-      ]
+      def pipelineConfiguration = creds(env.PIPELINE_SECRET_ID)
 
       withVault([vaultSecrets: pipelineSecrets, configuration: pipelineConfiguration]) {
       }

@@ -2,9 +2,9 @@
 
 library 'defn/jenkins-kiki@main'
 
-def NM_DOCKER = 'defn/hello'
-def VENDOR_PREFIX = ''
-def NM_BINARY = 'hello'
+def nmDocker = 'defn/hello'
+def vendorPrefix = ''
+def nmBinary = 'hello'
 
 def NM_PROJECT = 'defn/hello'
 def NM_JOB= 'defn--hello'
@@ -50,24 +50,7 @@ node() {
       }
     }
 
-    stage('Tests') {
-      sh "true"
-    }
-
-    withVault([vaultSecrets: githubSecrets]) {
-      withEnv(["DOCKER_CONFIG=/tmp/docker/${env.BUILD_TAG}"]) {
-        if (env.TAG_NAME) {
-          goRelease()
-
-          stage('Test Docker image') {
-            sh "/env.sh docker run --rm --entrypoint /" + NM_BINARY + "  " + NM_DOCKER + ":" + VENDOR_PREFIX + "${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"
-          }
-        }
-        else {
-          goBuild()
-        }
-      }
-    }
+    goMain(githubSecrets, nmBinary, nmDocker, vendorPrefix)
   }
 
   goClean()

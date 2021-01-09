@@ -32,7 +32,7 @@ def pipelineSecrets = [
 ]
 
 node() {
-  prepScm()
+  goPrep()
 
   withCredentials([[
     $class: 'VaultTokenCredentialBinding',
@@ -64,11 +64,11 @@ node() {
           }
         }
         else {
-          GoBuild()
+          goBuild()
         }
       }
     }
   }
 
-  cleanup()
+  goClean()
 }

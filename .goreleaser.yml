@@ -3,7 +3,7 @@ before:
     # You may remove this if you don't use go modules.
     - go mod download
 builds:
-  - binary: main
+  - binary: hello
     goos:
       - linux
       - darwin
@@ -14,7 +14,7 @@ builds:
       - CGO_ENABLED=0
 dockers:
   - binaries:
-      - main
+      - hello
     extra_files: []
     goos: linux
     goarch: amd64
@@ -25,7 +25,7 @@ dockers:
     build_flag_templates:
       - --platform=linux/amd64
   - binaries:
-      - main
+      - hello
     extra_files: []
     goos: linux
     goarch: arm64
@@ -49,7 +49,7 @@ brews:
     description: hello
     license: MIT
     install: |-
-      bin.install "main"
+      bin.install "hello"
     commit_author:
       name: goreleaserbot
       email: iam@defn.sh

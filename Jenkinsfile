@@ -8,6 +8,7 @@ def kiki = library 'defn/jenkins-kiki@main'
 
 def NM_DOCKER = 'defn/hello'
 def VENDOR_PREFIX = ''
+def NM_BINARY = 'hello'
 
 def NM_PROJECT = 'defn/hello'
 def NM_JOB= 'defn--hello'
@@ -88,7 +89,7 @@ node() {
           }
 
           stage('Test Docker image') {
-            sh "/env.sh docker run --rm --entrypoint /main " + NM_DOCKER + ":" + VENDOR_PREFIX + "${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"
+            sh "/env.sh docker run --rm --entrypoint /" + NM_BINARY + "  " + NM_DOCKER + ":" + VENDOR_PREFIX + "${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"
           }
         }
         else {

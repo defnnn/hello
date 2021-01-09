@@ -25,6 +25,8 @@ def pipelineSecrets = [
   [ 
     path: 'kv/pipeline/' + NM_JOB,
     secretValues: [
+      [vaultKey: 'MEH1'],
+      [vaultKey: 'MEH2']
     ]
   ]
 ]

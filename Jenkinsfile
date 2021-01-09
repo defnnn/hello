@@ -24,7 +24,6 @@ def pipelineSecrets = [
 ]
 
 node() {
-  sh "echo " + currentJob.getName()
   goMain('defn--hello', '7a87edd4-68d9-d7fb-974b-752f030c65b9', jenkinsSecrets, pipelineSecrets) {
     if (env.TAG_NAME) {
       stage('Test Docker image') {

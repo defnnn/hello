@@ -40,6 +40,19 @@ docker_manifests:
     image_templates:
       - "defn/hello:{{ .Version }}-amd64"
       - "defn/hello:{{ .Version }}-arm64"
+brews:
+  - tap:
+      owner: defn
+      name: homebrew-tools
+    folder: Formula
+    homepage:  https://defn.sh
+    description: hello
+    license: MIT
+    install: |-
+      bin.install "main"
+    commit_author:
+      name: goreleaserbot
+      email: iam@defn.sh
 checksum:
   name_template: 'checksums.txt'
 snapshot:

@@ -52,9 +52,10 @@ node() {
       def PIPELINE_SECRET_ID= ''
       env.PIPELINE_SECRET_ID = sh(returnStdout: true, script: "./ci/build ${NM_JOB}").trim()
 
-      def pipelineConfiguration = creds(env.PIPELINE_SECRET_ID)
+      def pipelineConfiguration = creds(pipelineRoleId, env.PIPELINE_SECRET_ID)
 
       withVault([vaultSecrets: pipelineSecrets, configuration: pipelineConfiguration]) {
+        sh("env | grep MEH")
       }
     }
 

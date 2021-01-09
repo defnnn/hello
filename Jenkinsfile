@@ -32,15 +32,5 @@ def pipelineSecrets = [
 ]
 
 node() {
-  goPrep()
-
-  withCredentials([[
-    $class: 'VaultTokenCredentialBinding',
-    credentialsId: 'VaultToken',
-    vaultAddr: env.VAULT_ADDR ]]) {
-
-    goMain(pipelineRoleId, githubSecrets, nmJob, nmBinary, nmDocker, vendorPrefix)
-  }
-
-  goClean()
+  goMain(pipelineRoleId, githubSecrets, nmJob, nmBinary, nmDocker, vendorPrefix)
 }

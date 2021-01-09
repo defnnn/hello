@@ -1,5 +1,5 @@
 FROM scratch
 
-COPY main /main
+COPY hello /hello
 
-ENTRYPOINT [ "/main" ]
+ENTRYPOINT [ "/hello" ]

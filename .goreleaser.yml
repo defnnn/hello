@@ -43,9 +43,9 @@ docker_manifests:
 brews:
   - tap:
       owner: defn
-      name: homebrew-tools
+      name: homebrew-taps
     folder: Formula
-    homepage:  https://defn.sh
+    homepage:  https://defn.sh/hello
     description: hello
     license: MIT
     install: |-

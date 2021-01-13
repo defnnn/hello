@@ -42,8 +42,12 @@ fmt:
 style:
 	/env.sh figlet -f /j/chunky.flf style
 	/env.sh drone exec --pipeline style
-	/env.sh go fmt; if ! git diff-files --quiet; then git diff; exit 1; fi
+	/env.sh go fmt; if test -n "$$(git status --porcelain)"; then git diff; exit 1; fi
 
 test:
 	/env.sh figlet -f /j/chunky.flf test
 	/env.sh drone exec --pipeline test
+
+docker:
+	/env.sh figlet -f /j/chunky.flf test docker
+	/env.sh docker run --rm --entrypoint /hello "$${DOCKER_IMAGE}"

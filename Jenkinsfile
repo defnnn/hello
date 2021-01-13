@@ -23,9 +23,10 @@ goreleaserMain(config) {
     sh("make test")
   }
   if (env.TAG_NAME) {
-    stage('Test Docker image') {
-      sh("/env.sh figlet -f /j/chunky.flf test docker")
-      sh("/env.sh docker run --rm --entrypoint /hello defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64")
+    withEnv(["DOCKER_IMAGE=defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"]) {
+      stage('Test Docker image') {
+        sh("make docker")
+      }
     }
   }
 }

@@ -40,8 +40,10 @@ fmt:
 	if ! git diff-files --quiet; then git diff; exit 1; fi
 
 style:
+	/env.sh figlet -f /j/chunky.flf style
 	/env.sh drone exec --pipeline style
 	/env.sh go fmt; if ! git diff-files --quiet; then git diff; exit 1; fi
 
 test:
+	/env.sh figlet -f /j/chunky.flf test
 	/env.sh drone exec --pipeline test

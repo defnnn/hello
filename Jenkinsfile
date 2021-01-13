@@ -16,12 +16,10 @@ def config = [
 
 goreleaserMain(config) {
   stage('Style') {
-    sh("/env.sh figlet -f /j/chunky.flf style")
     sh("make style")
   }
 
   stage('Test') {
-    sh("/env.sh figlet -f /j/chunky.flf test")
     sh("make test")
   }
   if (env.TAG_NAME) {

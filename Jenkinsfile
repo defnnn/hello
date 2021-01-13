@@ -22,6 +22,7 @@ goreleaserMain(config) {
   stage('Test') {
     sh("make test")
   }
+
   if (env.TAG_NAME) {
     withEnv(["DOCKER_IMAGE=defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"]) {
       stage('Test Docker image') {

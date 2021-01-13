@@ -37,6 +37,7 @@ pr:
 fmt:
 	drone fmt --save
 	go fmt
+	if ! git diff-files --quiet; then git diff; exit 1; fi
 
 style:
 	/env.sh drone exec --pipeline style

@@ -1,6 +1,5 @@
 before:
   hooks:
-    # You may remove this if you don't use go modules.
     - go mod download
 builds:
   - binary: hello
@@ -13,7 +12,7 @@ builds:
     env:
       - CGO_ENABLED=0
 dockers:
-  - binaries:
+  - ids:
       - hello
     extra_files: []
     goos: linux
@@ -24,7 +23,7 @@ dockers:
     use_buildx: true
     build_flag_templates:
       - --platform=linux/amd64
-  - binaries:
+  - ids:
       - hello
     extra_files: []
     goos: linux

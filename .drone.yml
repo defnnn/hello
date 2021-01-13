@@ -1,0 +1,38 @@
+---
+kind: pipeline
+type: docker
+name: style
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: drone fmt
+  image: letfn/drone
+  settings:
+    task: fmt
+
+- name: drone lint
+  image: letfn/drone
+  settings:
+    task: lint
+
+---
+kind: pipeline
+type: docker
+name: test
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: test
+  image: ubuntu
+  commands:
+  - uname -a
+  - df -klh
+  - id -a
+
+...

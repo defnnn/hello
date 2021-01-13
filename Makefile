@@ -40,6 +40,7 @@ fmt:
 
 style:
 	drone exec --pipeline style
+	go fmt; if ! git diff-files --quiet; then git diff; exit 1; fi
 
 test:
 	drone exec --pipeline test

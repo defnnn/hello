@@ -47,3 +47,7 @@ style:
 test:
 	/env.sh figlet -f /j/chunky.flf test
 	/env.sh drone exec --pipeline test
+
+docker:
+	/env.sh figlet -f /j/chunky.flf test docker
+	/env.sh docker run --rm --entrypoint /hello "$${DOCKER_IMAGE}"

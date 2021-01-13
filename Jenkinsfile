@@ -15,16 +15,13 @@ def config = [
 ]
 
 goreleaserMain(config) {
+  sh("/env.sh figlet -f /j/chunky.flf drone")
+  sh("make drone")
+
   if (env.TAG_NAME) {
     stage('Test Docker image') {
       sh("/env.sh figlet -f /j/chunky.flf test docker")
-      sh "/env.sh docker run --rm --entrypoint /hello defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"
-    }
-  }
-  else {
-    stage('Test') {
-      sh("/env.sh figlet -f /j/chunky.flf test")
-      sh "uname -a"
+      sh("/env.sh docker run --rm --entrypoint /hello defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64")
     }
   }
 }

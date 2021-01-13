@@ -33,3 +33,9 @@ logs:
 
 pr:
 	gh pr create --web
+
+fmt:
+	drone fmt --save
+
+drone:
+	drone exec --pipeline main

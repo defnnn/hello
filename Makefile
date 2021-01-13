@@ -36,6 +36,10 @@ pr:
 
 fmt:
 	drone fmt --save
+	go fmt
 
-drone:
-	drone exec --pipeline main
+style:
+	drone exec --pipeline style
+
+test:
+	drone exec --pipeline test

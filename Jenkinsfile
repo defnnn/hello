@@ -15,9 +15,15 @@ def config = [
 ]
 
 goreleaserMain(config) {
-  sh("/env.sh figlet -f /j/chunky.flf drone")
-  sh("make drone")
+  stage('Style') {
+    sh("/env.sh figlet -f /j/chunky.flf style")
+    sh("make style")
+  }
 
+  stage('Test') {
+    sh("/env.sh figlet -f /j/chunky.flf test")
+    sh("make test")
+  }
   if (env.TAG_NAME) {
     stage('Test Docker image') {
       sh("/env.sh figlet -f /j/chunky.flf test docker")

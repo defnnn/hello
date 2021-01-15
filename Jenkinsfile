@@ -19,7 +19,6 @@ goreleaserMain(config) {
     stage('Test inside Docker') {
       sh """
         pwd
-        find -ls
         uname -a
         id -a
         env | cut -d= -f1 | sort

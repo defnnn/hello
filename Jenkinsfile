@@ -33,5 +33,11 @@ goreleaserMain(config) {
         }
       }
     }
+  else {
+    stage('Test inside Docker') {
+      docker.image("ubuntu").inside {
+        sh("uname -a")
+      }
+    }
   }
 }

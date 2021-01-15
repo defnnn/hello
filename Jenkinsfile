@@ -23,8 +23,21 @@ goreleaserMain(config) {
     sh("make test")
   }
 
+  stage('Test inside Docker') {
+    docker.image("ubuntu").inside {
+      sh """
+        pwd
+        find -ls
+        uname -a
+        id -a
+        env | cut -d= -f1 | sort
+      """
+    }
+  }
+
   if (env.TAG_NAME) {
-    withEnv(["DOCKER_IMAGE=defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"]) {
+    def image = "defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"
+    withEnv(["DOCKER_IMAGE=${image}"]) {
       stage('Test Docker image') {
         sh("make docker")
       }

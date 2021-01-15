@@ -29,7 +29,8 @@ goreleaserMain(config) {
         pwd
         uname -a
         id -a
-        env | cut -d= -f1 | sort
+        env | cut -d= -f1 | sort | xargs
+        /env.sh go fmt; if test -n "$$(git status --porcelain)"; then git diff; exit 1; fi
       """
     }
   }

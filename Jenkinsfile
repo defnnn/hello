@@ -27,6 +27,7 @@ goreleaserMain(config) {
     docker.image("ubuntu").inside {
       sh """
         pwd
+        ls
         cd
         pwd
         ls

@@ -24,10 +24,11 @@ goreleaserMain(config) {
   }
 
   if (env.TAG_NAME) {
-    withEnv(["DOCKER_IMAGE=defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"]) {
+    def image = "defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"
+    withEnv(["DOCKER_IMAGE=${image}"]) {
       stage('Test Docker image') {
         sh("make docker")
-        docker.image('defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64').inside {
+        docker.image(image).inside {
           sh("uname -a")
         }
       }

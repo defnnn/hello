@@ -26,6 +26,10 @@ goreleaserMain(config) {
   stage('Test inside Docker') {
     docker.image("ubuntu").inside {
       sh """
+        pwd
+        cd
+        pwd
+        ls
         uname -a
         df -klh
         id -a

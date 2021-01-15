@@ -15,7 +15,7 @@ def config = [
 ]
 
 goreleaserMain(config) {
-  docker.image("ubuntu").inside {
+  docker.image("defn/jenkins").inside {
     stage('Test inside Docker') {
       sh """
         pwd

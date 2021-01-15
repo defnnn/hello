@@ -27,12 +27,8 @@ goreleaserMain(config) {
     docker.image("ubuntu").inside {
       sh """
         pwd
-        ls
-        cd
-        pwd
-        ls
+        find -ls
         uname -a
-        df -klh
         id -a
         env | cut -d= -f1 | sort
       """

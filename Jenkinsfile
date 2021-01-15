@@ -15,7 +15,7 @@ def config = [
 ]
 
 goreleaserMain(config) {
-  docker.image("defn/jenkins").inside {
+  docker.image("defn/jenkins").inside('-v /certs/client:/certs/client -e DOCKER_CERT_PATH=/certs/client -e DOCKER_TLS_VERIFY=1 -e DOCKER_HOST=tcp://127.0.0.1:2376') {
     stage('Test inside Docker') {
       sh """
         pwd

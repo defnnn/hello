@@ -15,16 +15,8 @@ def config = [
 ]
 
 goreleaserMain(config) {
-  stage('Style') {
-    sh("make style")
-  }
-
-  stage('Test') {
-    sh("make test")
-  }
-
-  stage('Test inside Docker') {
-    docker.image("ubuntu").inside {
+  docker.image("ubuntu").inside {
+    stage('Test inside Docker') {
       sh """
         pwd
         find -ls
@@ -32,6 +24,14 @@ goreleaserMain(config) {
         id -a
         env | cut -d= -f1 | sort
       """
+    }
+
+    stage('Style') {
+      sh("make style")
+    }
+
+    stage('Test') {
+      sh("make test")
     }
   }
 

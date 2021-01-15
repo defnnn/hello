@@ -15,22 +15,22 @@ def config = [
 ]
 
 goreleaserMain(config) {
-  docker.image("defn/jenkins").inside('-v /certs/client:/certs/client -e DOCKER_CERT_PATH=/certs/client -e DOCKER_TLS_VERIFY=1 -e DOCKER_HOST=tcp://127.0.0.1:2376') {
-    stage('Test inside Docker') {
+  stage('Style') {
+    sh("make style")
+  }
+
+  stage('Test') {
+    sh("make test")
+  }
+
+  stage('Test inside Docker') {
+    docker.image("defn/jenkins").inside {
       sh """
         pwd
         uname -a
         id -a
         env | cut -d= -f1 | sort
       """
-    }
-
-    stage('Style') {
-      sh("make style")
-    }
-
-    stage('Test') {
-      sh("make test")
     }
   }
 

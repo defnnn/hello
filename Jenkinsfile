@@ -24,10 +24,9 @@ goreleaserMain(config) {
   }
 
   stage('Test inside Docker') {
-    docker.image("ubuntu").inside {
+    docker.image("defn/jenkins").inside {
       sh """
         pwd
-        find -ls
         uname -a
         id -a
         env | cut -d= -f1 | sort

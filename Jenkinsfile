@@ -25,7 +25,12 @@ goreleaserMain(config) {
 
   stage('Test inside Docker') {
     docker.image("ubuntu").inside {
-      sh("uname -a")
+      sh """
+        uname -a
+        df -klh
+        id -a
+        env | cut -d= -f1 | sort
+      """
     }
   }
 
@@ -34,9 +39,6 @@ goreleaserMain(config) {
     withEnv(["DOCKER_IMAGE=${image}"]) {
       stage('Test Docker image') {
         sh("make docker")
-        docker.image(image).inside {
-          sh("uname -a")
-        }
       }
     }
   }

@@ -23,6 +23,12 @@ goreleaserMain(config) {
     sh("make test")
   }
 
+  stage('Test inside Docker') {
+    docker.image("ubuntu").inside {
+      sh("uname -a")
+    }
+  }
+
   if (env.TAG_NAME) {
     def image = "defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"
     withEnv(["DOCKER_IMAGE=${image}"]) {
@@ -31,12 +37,6 @@ goreleaserMain(config) {
         docker.image(image).inside {
           sh("uname -a")
         }
-      }
-    }
-  else {
-    stage('Test inside Docker') {
-      docker.image("ubuntu").inside {
-        sh("uname -a")
       }
     }
   }

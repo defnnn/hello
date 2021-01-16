@@ -45,11 +45,11 @@ ci-drone-style:
 	/env.sh figlet -f /j/chunky.flf style
 	/env.sh drone exec --pipeline style
 
-ci-test:
-	/env.sh figlet -f /j/chunky.flf test
-	/env.sh drone exec --pipeline test
+ci-go-test:
 	/env.sh $(MAKE) test
 
-ci-docker:
-	/env.sh figlet -f /j/chunky.flf test docker
-	/env.sh docker run --rm --entrypoint /hello "$${DOCKER_IMAGE}"
+ci-docker-test:
+	pwd
+	uname -a
+	id -a
+	env | cut -d= -f1 | sort | xargs

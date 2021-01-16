@@ -17,12 +17,12 @@ func routing() http.Handler {
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("Hello World"))
+		w.Write([]byte("Hello World!"))
 	})
 
 	r.Post("/pets/luna", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(fmt.Sprintf("hello %s", r.RequestURI)))
+		w.Write([]byte(fmt.Sprintf("Hello %s", r.RequestURI)))
 	})
 
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {

@@ -16,11 +16,11 @@ def config = [
 
 goreleaserMain(config) {
   stage('Style') {
-    sh("make style")
+    sh("make ci-drone-style")
   }
 
   stage('Test') {
-    sh("make test")
+    sh("make ci-test")
   }
 
   withEnv(["VAULT_ADDR= VAULT_TOKEN= GITHUB_TOKEN="]) {
@@ -30,7 +30,6 @@ goreleaserMain(config) {
           pwd
           uname -a
           id -a
-          env | cut -d= -f1 | sort | xargs
           env | sort
         """
       }

@@ -46,9 +46,11 @@ ci-drone-style:
 	/env.sh drone exec --pipeline style
 
 ci-go-test:
+	/env.sh figlet -f /j/chunky.flf go
 	/env.sh $(MAKE) test
 
 ci-docker-test:
+	/env.sh figlet -f /j/chunky.flf docker
 	pwd
 	uname -a
 	id -a

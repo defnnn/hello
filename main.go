@@ -20,9 +20,9 @@ func routing() http.Handler {
 		w.Write([]byte("Hello World"))
 	})
 
-	r.Get("/id/{id}", func(w http.ResponseWriter, r *http.Request) {
+	r.Post("/pets/luna", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("Hello World"))
+		w.Write([]byte(fmt.Sprintf("hello %s", r.RequestURI)))
 	})
 
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {

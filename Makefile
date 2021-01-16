@@ -41,9 +41,6 @@ fmt:
 test:
 	go test
 
-ci-go-test:
-	/env.sh $(MAKE) test
-
 ci-drone-style:
 	/env.sh figlet -f /j/chunky.flf style
 	/env.sh drone exec --pipeline style
@@ -51,6 +48,7 @@ ci-drone-style:
 ci-test:
 	/env.sh figlet -f /j/chunky.flf test
 	/env.sh drone exec --pipeline test
+	/env.sh $(MAKE) test
 
 ci-docker:
 	/env.sh figlet -f /j/chunky.flf test docker

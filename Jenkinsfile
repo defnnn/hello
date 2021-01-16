@@ -16,7 +16,9 @@ def config = [
 
 goreleaserMain(config) {
   stage('Style') {
-    sh("make ci-drone-style")
+    retry(3) {
+      sh("make ci-drone-style")
+    }
   }
 
   stage('Test') {

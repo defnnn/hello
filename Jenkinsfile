@@ -32,7 +32,7 @@ goreleaserMain(config) {
           pwd
           uname -a
           id -a
-          env | sort
+          env | cut -d= -f1 | sort | xargs
         """
       }
     }
@@ -50,7 +50,7 @@ goreleaserMain(config) {
           pwd
           uname -a
           id -a
-          env | cut -d= -f1 | sort | xargs
+          env | sort
         """
       }
     }

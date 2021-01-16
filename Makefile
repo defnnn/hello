@@ -37,7 +37,12 @@ pr:
 fmt:
 	drone fmt --save
 	go fmt
-	if test -n "$$(git status --porcelain)"; then git diff; exit 1; fi
+
+test:
+	go test
+
+ci-go-test:
+	/env.sh $(MAKE) test
 
 ci-drone-style:
 	/env.sh figlet -f /j/chunky.flf style

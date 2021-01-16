@@ -16,7 +16,9 @@ def config = [
 
 goreleaserMain(config) {
   stage('Style') {
-    sh("make ci-drone-style")
+    retry(3) {
+      sh("make ci-drone-style")
+    }
   }
 
   stage('Test') {
@@ -40,11 +42,13 @@ goreleaserMain(config) {
 
   if (env.TAG_NAME) {
     docker.image("defn/jenkins-go").inside {
+      sh("make ci-go-test")
       goRelease()
     }
   }
   else {
     docker.image("defn/jenkins-go").inside {
+      sh("make ci-go-test")
       goBuild()
     }
   }

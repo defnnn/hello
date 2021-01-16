@@ -16,30 +16,36 @@ def config = [
 
 goreleaserMain(config) {
   stage('Style') {
-    sh("make style")
+    sh("make ci-drone-style")
   }
 
   stage('Test') {
-    sh("make test")
+    sh("make ci-test")
   }
 
-  stage('Test inside Docker') {
-    docker.image("defn/jenkins").inside {
-      sh """
-        pwd
-        uname -a
-        id -a
-        env | cut -d= -f1 | sort
-      """
+  withEnv([
+    "VAULT_ADDR=", "VAULT_TOKEN=", "GITHUB_TOKEN=", "DOCKER_USERNAME=",
+    "DOCKER_PASSWORD=", "UNWRAPPED_SID=", "WRAPPED_SID="]) {
+    stage('Test inside Docker') {
+      docker.image("defn/jenkins").inside {
+        sh """
+          pwd
+          uname -a
+          id -a
+          env | cut -d= -f1 | sort | xargs
+        """
+      }
     }
   }
 
   if (env.TAG_NAME) {
-    def image = "defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"
-    withEnv(["DOCKER_IMAGE=${image}"]) {
-      stage('Test Docker image') {
-        sh("make docker")
-      }
+    docker.image("defn/jenkins-go").inside {
+      goRelease()
+    }
+  }
+  else {
+    docker.image("defn/jenkins-go").inside {
+      goBuild()
     }
   }
 }

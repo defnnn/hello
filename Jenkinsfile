@@ -43,7 +43,7 @@ goreleaserMain(config) {
     }
 
     def image = "defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"
-    docker.image("image).inside {
+    docker.image(image).inside {
       stage('Test Docker image') {
         sh """
           pwd

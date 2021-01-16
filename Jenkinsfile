@@ -42,18 +42,6 @@ goreleaserMain(config) {
     docker.image("defn/jenkins-go").inside {
       goRelease()
     }
-
-    def image = "defn/hello:${env.GORELEASER_CURRENT_TAG.minus('v')}-amd64"
-    docker.image(image).inside {
-      stage('Test Docker image') {
-        sh """
-          pwd
-          uname -a
-          id -a
-          env | sort
-        """
-      }
-    }
   }
   else {
     docker.image("defn/jenkins-go").inside {

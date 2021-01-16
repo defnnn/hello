@@ -21,35 +21,32 @@ goreleaserMain(config) {
     }
   }
 
-  stage('Test') {
-    sh("make ci-test")
-  }
-
   withEnv([
     "VAULT_ADDR=", "VAULT_TOKEN=", "GITHUB_TOKEN=", "DOCKER_USERNAME=",
     "DOCKER_PASSWORD=", "UNWRAPPED_SID=", "WRAPPED_SID="]) {
-    stage('Test inside Docker') {
+
+    stage('Test: Docker') {
       docker.image("defn/jenkins").inside {
-        sh """
-          pwd
-          uname -a
-          id -a
-          env | cut -d= -f1 | sort | xargs
-        """
+        sh("make ci-docker-test")
       }
     }
   }
 
-  if (env.TAG_NAME) {
-    docker.image("defn/jenkins-go").inside {
-      sh("make ci-go-test")
-      goRelease()
-    }
-  }
-  else {
-    docker.image("defn/jenkins-go").inside {
-      sh("make ci-go-test")
-      goBuild()
+  docker.image("defn/jenkins-go").inside {
+    withEnv([
+      "VAULT_ADDR=", "VAULT_TOKEN=", "GITHUB_TOKEN=", "DOCKER_USERNAME=",
+      "DOCKER_PASSWORD=", "UNWRAPPED_SID=", "WRAPPED_SID="]) {
+
+      stage('Test: Go') {
+        sh("make ci-go-test")
+      }
+
+      if (env.TAG_NAME) {
+        goRelease()
+      }
+      else {
+        goBuild()
+      }
     }
   }
 }

@@ -42,13 +42,13 @@ goreleaserMain(config) {
 
   if (env.TAG_NAME) {
     docker.image("defn/jenkins-go").inside {
-      sh("go test")
+      sh("make ci-go-test")
       goRelease()
     }
   }
   else {
     docker.image("defn/jenkins-go").inside {
-      sh("go test")
+      sh("make ci-go-test")
       goBuild()
     }
   }

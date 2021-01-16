@@ -23,7 +23,10 @@ goreleaserMain(config) {
     sh("make ci-test")
   }
 
-  withEnv(["VAULT_ADDR= VAULT_TOKEN= GITHUB_TOKEN="]) {
+  withEnv([
+    "VAULT_ADDR=", "VAULT_TOKEN=", "GITHUB_TOKEN=", "DOCKER_USERNAME=",
+    "DOCKER_PASSWORD=", "JENKINS_NODE_COOKIE=", "JENKINS_SERVER_COOKIE=",
+    "HUDSON_SERVER_COOKIE=", "UNWRAPPED_SID=", "WRAPPED_SID="]) {
     stage('Test inside Docker') {
       docker.image("defn/jenkins").inside {
         sh """

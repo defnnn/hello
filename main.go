@@ -3,50 +3,41 @@ package main
 import (
 	"flag"
 	"fmt"
-	"net/http"
 
 	"github.com/apex/gateway/v2"
-	"github.com/go-chi/chi"
+
+	"github.com/gofiber/adaptor/v2"
+	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
-	portStr := ":3000"
-	listener := gateway.ListenAndServe
-
 	port := flag.Int("port", -1, "specify a port to use")
 	flag.Parse()
 
-	if *port != -1 {
-		portStr = fmt.Sprintf(":%d", *port)
-		listener = http.ListenAndServe
+	if *port == -1 {
+		gateway.ListenAndServe(":3000", adaptor.FiberApp(routing()))
+	} else {
+		portStr := fmt.Sprintf(":%d", *port)
+		routing().Listen(portStr)
 	}
 
-	listener(portStr, routing())
 }
 
-func routing() http.Handler {
-	r := chi.NewRouter()
+func routing() *fiber.App {
+	app := fiber.New()
 
-	r.Get("/", routeRoot)
+	app.Get("/", routeRoot)
 
-	r.Post("/pets/{name}", routePets)
+	app.Post("/pets/:pet", routePets)
 
-	r.NotFound(routeNotFound)
-
-	return r
+	return app
 }
 
-func routeRoot(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Hello World!"))
+func routeRoot(c *fiber.Ctx) error {
+	return c.SendString("Hello World!")
 }
 
-func routePets(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(fmt.Sprintf("Hello %s", chi.URLParam(r, "name"))))
-}
-
-func routeNotFound(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(fmt.Sprintf("Not found: [%s]", r.RequestURI)))
+func routePets(c *fiber.Ctx) error {
+	msg := fmt.Sprintf("Hello %s", c.Params("pet"))
+	return c.SendString(msg)
 }

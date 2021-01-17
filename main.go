@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"net/http"
 
@@ -9,7 +10,18 @@ import (
 )
 
 func main() {
-	gateway.ListenAndServe("3000", routing())
+	portStr := ":3000"
+	listener := gateway.ListenAndServe
+
+	port := flag.Int("port", -1, "specify a port to use")
+	flag.Parse()
+
+	if *port != -1 {
+		portStr = fmt.Sprintf(":%d", *port)
+		listener = http.ListenAndServe
+	}
+
+	listener(portStr, routing())
 }
 
 func routing() http.Handler {

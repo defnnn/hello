@@ -19,7 +19,7 @@ func TestRoot(t *testing.T) {
 	assert.JSONEq(t, `{"body":"Hello World!", "cookies": null, "headers":{"Content-Type":"text/plain; charset=utf8"}, "multiValueHeaders":{}, "statusCode":200}`, string(payload))
 }
 
-func TestPetsLuna(t *testing.T) {
+func TestPets(t *testing.T) {
 	e := []byte(`{"version": "2.0", "rawPath": "/pets/luna", "requestContext": {"http": {"method": "POST"}}}`)
 
 	gw := gateway.NewGateway(routing())
@@ -27,7 +27,7 @@ func TestPetsLuna(t *testing.T) {
 	payload, err := gw.Invoke(context.Background(), e)
 
 	assert.NoError(t, err)
-	assert.JSONEq(t, `{"body":"Hello /pets/luna", "cookies": null, "headers":{"Content-Type":"text/plain; charset=utf8"}, "multiValueHeaders":{}, "statusCode":200}`, string(payload))
+	assert.JSONEq(t, `{"body":"Hello luna", "cookies": null, "headers":{"Content-Type":"text/plain; charset=utf8"}, "multiValueHeaders":{}, "statusCode":200}`, string(payload))
 }
 
 func TestNotFound(t *testing.T) {

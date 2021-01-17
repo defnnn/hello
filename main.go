@@ -27,20 +27,26 @@ func main() {
 func routing() http.Handler {
 	r := chi.NewRouter()
 
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("Hello World!"))
-	})
+	r.Get("/", routeRoot)
 
-	r.Post("/pets/luna", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(fmt.Sprintf("Hello %s", r.RequestURI)))
-	})
+	r.Post("/pets/{name}", routePets)
 
-	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(fmt.Sprintf("Not found: [%s]", r.RequestURI)))
-	})
+	r.NotFound(routeNotFound)
 
 	return r
+}
+
+func routeRoot(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Hello World!"))
+}
+
+func routePets(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(fmt.Sprintf("Hello %s", chi.URLParam(r, "name"))))
+}
+
+func routeNotFound(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(fmt.Sprintf("Not found: [%s]", r.RequestURI)))
 }

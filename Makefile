@@ -41,6 +41,9 @@ fmt:
 test:
 	go test
 
+run:
+	go run main.go -port 3000
+
 ci-drone-style:
 	/env.sh figlet -f /j/chunky.flf style
 	/env.sh drone exec --pipeline style

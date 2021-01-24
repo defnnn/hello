@@ -2,9 +2,10 @@
 
 library 'defn/jenkins-kiki@main'
 
-def config = [
-  name: 'defn/hello',
-  roleId: '7a87edd4-68d9-d7fb-974b-752f030c65b9'
-]
+kiki(null) {
+  sh("set +x; /env.sh figlet -f /j/broadway.flf hello | lolcat -f; echo")
 
-goreleaserMain(config)
+  goreleaserMain()
+
+  sh("set +x; /env.sh figlet -f /j/broadway.flf wrld | lolcat -f; echo")
+}

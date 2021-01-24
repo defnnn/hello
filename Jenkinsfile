@@ -7,5 +7,5 @@ kiki(null) {
 
   goreleaserMain()
 
-  sh("set +x; /env.sh figlet -f /j/broadway.flf world | lolcat -f; echo")
+  sh("set +x; /env.sh figlet -f /j/broadway.flf wrld | lolcat -f; echo")
 }

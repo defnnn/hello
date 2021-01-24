@@ -2,7 +2,7 @@
 
 library 'defn/jenkins-kiki@main'
 
-kiki() {
+kiki(null) {
   sh("set +x; /env.sh figlet -f /j/broadway.flf hello | lolcat -f; echo")
 
   goreleaserMain()

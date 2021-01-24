@@ -3,9 +3,9 @@
 library 'defn/jenkins-kiki@main'
 
 kiki(null) {
-  figlet("hello")
+  lolcat("hello")
 
   goreleaserMain()
 
-  figlet("world")
+  lolcat("world")
 }

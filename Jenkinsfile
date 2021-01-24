@@ -2,7 +2,7 @@
 
 library 'defn/jenkins-kiki@main'
 
-kiki {
+kiki(null) {
   figlet("hello")
 
   goreleaserMain()

@@ -3,9 +3,9 @@
 library 'defn/jenkins-kiki@main'
 
 kiki(null) {
-  sh("set +x; /env.sh figlet -f /j/broadway.flf hello | lolcat -f; echo")
+  lolcat('hello')
 
   goreleaserMain()
 
-  sh("set +x; /env.sh figlet -f /j/broadway.flf wrld | lolcat -f; echo")
+  figlet('world', 'broadway')
 }

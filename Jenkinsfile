@@ -4,7 +4,7 @@ library 'defn/jenkins-kiki@main'
 
 properties([
   parameters([
-    string(name: 'hello', defaultValue: 'hello'),
+    string(name: 'hello', defaultValue: 'hey'),
     string(name: 'present', defaultValue: 'world')
   ])
 ])

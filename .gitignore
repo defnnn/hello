@@ -1,4 +1,1 @@
-.env
-main
-hello
-dist
+cue.mod/pkg/

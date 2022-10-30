@@ -1,2 +1,10 @@
-update:
-    go get -u ./...
+all: client/client worker/worker
+
+client/client: # Build temporal client
+	cd client && go build
+
+worker/worker: # Build temporal worker
+	cd worker && go build
+
+go-update:
+	go get -u ./...

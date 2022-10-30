@@ -1,5 +1,7 @@
 github.com/defn/boot v0.0.107 h1:TZKR6DaRMmyLeJ3NjvGBwIvcPJfwfhdbqUh3eBZxIho=
 github.com/defn/boot v0.0.107/cue.mods h1:vg/uqreyeIZfY+GXxj0yQbKxXLI07XU4z2BvrOblkSI=
+github.com/defn/boot v0.0.109 h1:DaNQb360uMK+QtGB3UZHj6gTP7QqZeqnGesWNP+RY4k=
+github.com/defn/boot v0.0.109/cue.mods h1:vg/uqreyeIZfY+GXxj0yQbKxXLI07XU4z2BvrOblkSI=
 github.com/defn/boot v0.0.27 h1:IXWGRzSKpMfa5WFgmJGrPGFsZ00ZK3uqWe/iGD8ylwI=
 github.com/defn/boot v0.0.27/cue.mods h1:2xaRwaxHndhN6qR1XhaR3vAZlnfniROCNz2Icp8xa5M=
 github.com/defn/boot v0.0.28 h1:fx0UlcRTeEwWf7Wa7KZNvcLnYMWMGl3+I2S/aKyuFhA=
